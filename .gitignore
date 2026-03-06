@@ -1,0 +1,63 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+env/
+venv/
+.env/
+portfolio_env/           # Name of your conda env (if located inside project)
+conda-env/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+*.nbconvert/
+
+# Data files (optional – comment out if you want to commit small CSVs)
+# *.csv
+# *.xlsx
+# *.parquet
+# *.feather
+# *.pkl
+# *.h5
+
+# Model files (optional – comment if you want to commit model)
+*.model
+*.json
+*.joblib
+
+# IDEs
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs and outputs
+logs/
+*.log
+
+# Environment variables
+.env
+
+# Next.js
+frontend/.next
+node_modules
+
+
+node_modules/
+.next/
+.env
+__pycache__/
+*.pycgit rm -r --cached frontend/node_modules
+git rm -r --cached frontend/.next

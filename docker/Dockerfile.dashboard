@@ -1,0 +1,17 @@
+FROM python:3.9-slim
+
+WORKDIR /app
+
+# Install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy source code
+COPY src/dashboard/ ./src/dashboard/
+
+# The API URL should be overridden via environment variables if deployed together
+ENV API_URL="http://api:8000"
+
+EXPOSE 8501
+
+CMD ["streamlit", "run", "src/dashboard/app.py", "--server.port=8501", "--server.address=0.0.0.0"]

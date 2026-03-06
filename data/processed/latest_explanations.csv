@@ -1,0 +1,51 @@
+ticker,top_feature,top_shap_value,justification
+ADANIENT.NS,rsi,0.006511971829390876,Primary driver is rsi contributing a bullish signal (0.0065). Secondary factor is atr (bearish).
+ADANIPORTS.NS,rsi,0.006380603981957502,Primary driver is rsi contributing a bullish signal (0.0064). Secondary factor is macd diff (bearish).
+APOLLOHOSP.NS,rsi,0.008555508531111564,Primary driver is rsi contributing a bullish signal (0.0086). Secondary factor is macd diff (bearish).
+ASIANPAINT.NS,rsi,0.008038813317733023,Primary driver is rsi contributing a bullish signal (0.0080). Secondary factor is macd diff (bearish).
+AXISBANK.NS,rsi,0.007018811640228708,Primary driver is rsi contributing a bullish signal (0.0070). Secondary factor is macd diff (bearish).
+BAJAJ-AUTO.NS,rsi,0.007120143073008315,Primary driver is rsi contributing a bullish signal (0.0071). Secondary factor is macd diff (bearish).
+BAJAJFINSV.NS,rsi,0.006685633788772898,Primary driver is rsi contributing a bullish signal (0.0067). Secondary factor is atr (bearish).
+BAJFINANCE.NS,rsi,0.006830857526826009,Primary driver is rsi contributing a bullish signal (0.0068). Secondary factor is cci (bullish).
+BHARTIARTL.NS,rsi,0.007197637698466311,Primary driver is rsi contributing a bullish signal (0.0072). Secondary factor is cci (bullish).
+BPCL.NS,rsi,0.006547629521186099,Primary driver is rsi contributing a bullish signal (0.0065). Secondary factor is macd diff (bearish).
+BRITANNIA.NS,rsi,0.00702288762177896,Primary driver is rsi contributing a bullish signal (0.0070). Secondary factor is macd diff (bearish).
+CIPLA.NS,rsi,0.007951261062664031,Primary driver is rsi contributing a bullish signal (0.0080). Secondary factor is macd diff (bearish).
+COALINDIA.NS,rsi,0.0075938656445319165,Primary driver is rsi contributing a bullish signal (0.0076). Secondary factor is macd diff (bearish).
+DIVISLAB.NS,rsi,0.008143419142339035,Primary driver is rsi contributing a bullish signal (0.0081). Secondary factor is macd diff (bearish).
+DRREDDY.NS,rsi,0.00847258599966853,Primary driver is rsi contributing a bullish signal (0.0085). Secondary factor is macd diff (bearish).
+EICHERMOT.NS,rsi,0.0070783961770300025,Primary driver is rsi contributing a bullish signal (0.0071). Secondary factor is macd diff (bearish).
+GRASIM.NS,rsi,0.006836027744654207,Primary driver is rsi contributing a bullish signal (0.0068). Secondary factor is macd diff (bearish).
+HCLTECH.NS,rsi,0.006228183238587607,Primary driver is rsi contributing a bullish signal (0.0062). Secondary factor is atr (bearish).
+HDFCBANK.NS,rsi,0.007854439272976452,Primary driver is rsi contributing a bullish signal (0.0079). Secondary factor is macd diff (bearish).
+HDFCLIFE.NS,rsi,0.007894947474357386,Primary driver is rsi contributing a bullish signal (0.0079). Secondary factor is macd diff (bearish).
+HEROMOTOCO.NS,rsi,0.006953817143704899,Primary driver is rsi contributing a bullish signal (0.0070). Secondary factor is macd diff (bearish).
+HINDALCO.NS,rsi,0.0082901735453376,Primary driver is rsi contributing a bullish signal (0.0083). Secondary factor is macd diff (bearish).
+HINDUNILVR.NS,rsi,0.008135512878027442,Primary driver is rsi contributing a bullish signal (0.0081). Secondary factor is atr (bearish).
+ICICIBANK.NS,rsi,0.006384826213686367,Primary driver is rsi contributing a bullish signal (0.0064). Secondary factor is cci (bullish).
+INDUSINDBK.NS,vol_12m,0.01743832627889278,Primary driver is vol 12m contributing a bullish signal (0.0174). Secondary factor is rsi (bullish).
+INFY.NS,rsi,0.006965699056782336,Primary driver is rsi contributing a bullish signal (0.0070). Secondary factor is atr (bearish).
+ITC.NS,rsi,0.00590505211567457,Primary driver is rsi contributing a bullish signal (0.0059). Secondary factor is macd diff (bearish).
+JSWSTEEL.NS,rsi,0.007083075421514909,Primary driver is rsi contributing a bullish signal (0.0071). Secondary factor is macd diff (bearish).
+KOTAKBANK.NS,rsi,0.0058308992127127784,Primary driver is rsi contributing a bullish signal (0.0058). Secondary factor is cci (bullish).
+LT.NS,rsi,0.006923562160191259,Primary driver is rsi contributing a bullish signal (0.0069). Secondary factor is macd diff (bearish).
+LTIM.NS,rsi,0.007333957965914527,Primary driver is rsi contributing a bullish signal (0.0073). Secondary factor is macd diff (bearish).
+M&M.NS,rsi,0.007300541807496402,Primary driver is rsi contributing a bullish signal (0.0073). Secondary factor is atr (bearish).
+MARUTI.NS,rsi,0.0069040322235922255,Primary driver is rsi contributing a bullish signal (0.0069). Secondary factor is macd diff (bearish).
+NESTLEIND.NS,rsi,0.0067417740735003645,Primary driver is rsi contributing a bullish signal (0.0067). Secondary factor is macd diff (bearish).
+NTPC.NS,rsi,0.007149122895057291,Primary driver is rsi contributing a bullish signal (0.0071). Secondary factor is macd diff (bearish).
+ONGC.NS,rsi,0.006983175762718226,Primary driver is rsi contributing a bullish signal (0.0070). Secondary factor is macd diff (bearish).
+POWERGRID.NS,rsi,0.007203141308431109,Primary driver is rsi contributing a bullish signal (0.0072). Secondary factor is macd diff (bearish).
+RELIANCE.NS,rsi,0.007622098143906741,Primary driver is rsi contributing a bullish signal (0.0076). Secondary factor is macd diff (bearish).
+SBILIFE.NS,rsi,0.006605130704511756,Primary driver is rsi contributing a bullish signal (0.0066). Secondary factor is atr (bearish).
+SBIN.NS,rsi,0.007126325527805465,Primary driver is rsi contributing a bullish signal (0.0071). Secondary factor is macd diff (bearish).
+SHRIRAMFIN.NS,mom_6m,0.020416822625810453,Primary driver is mom 6m contributing a bullish signal (0.0204). Secondary factor is vol 12m (bullish).
+SUNPHARMA.NS,rsi,0.008428806813412583,Primary driver is rsi contributing a bullish signal (0.0084). Secondary factor is macd diff (bearish).
+TATACONSUM.NS,rsi,0.0068307939840667065,Primary driver is rsi contributing a bullish signal (0.0068). Secondary factor is macd diff (bearish).
+TATASTEEL.NS,macd_diff,-0.005814380392684479,Primary driver is macd diff contributing a bearish signal (-0.0058). Secondary factor is rsi (bullish).
+TCS.NS,rsi,0.007529227349535164,Primary driver is rsi contributing a bullish signal (0.0075). Secondary factor is atr (bearish).
+TECHM.NS,rsi,0.007354693790634801,Primary driver is rsi contributing a bullish signal (0.0074). Secondary factor is atr (bearish).
+TITAN.NS,rsi,0.008573723208132744,Primary driver is rsi contributing a bullish signal (0.0086). Secondary factor is macd diff (bearish).
+ULTRACEMCO.NS,rsi,0.006706712487662303,Primary driver is rsi contributing a bullish signal (0.0067). Secondary factor is atr (bearish).
+WIPRO.NS,rsi,0.005902816184663762,Primary driver is rsi contributing a bullish signal (0.0059). Secondary factor is atr (bearish).
+^NSEI,rsi,0.006967768331119215,Primary driver is rsi contributing a bullish signal (0.0070). Secondary factor is atr (bearish).

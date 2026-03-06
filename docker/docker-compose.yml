@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  db:
+    image: timescale/timescaledb:latest-pg14
+    environment:
+      POSTGRES_USER: portfolio_user
+      POSTGRES_PASSWORD: portfolio_password
+      POSTGRES_DB: portfolio_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ../config/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+
+  api:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile.api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "postgresql://portfolio_user:portfolio_password@db:5432/portfolio_db"
+
+  dashboard:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile.dashboard
+    ports:
+      - "8501:8501"
+    depends_on:
+      - api
+    environment:
+      API_URL: "http://api:8000"
+
+volumes:
+  pgdata:

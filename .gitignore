@@ -59,5 +59,4 @@ node_modules/
 .next/
 .env
 __pycache__/
-*.pycgit rm -r --cached frontend/node_modules
-git rm -r --cached frontend/.next
+*.pyc

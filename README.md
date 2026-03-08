@@ -1,64 +1,71 @@
-# Nifty 50 Portfolio ML System
+# AI-Powered Wealth Manager & Nifty 50 ML System
 
-A production-ready machine learning pipeline for forecasting returns, assessing volatility, detecting market regimes, and producing an optimized Nifty 50 portfolio.
+A production-ready machine learning pipeline and Next.js B2C web platform for forecasting returns, assessing portfolio risk, detecting market regimes, and producing an optimized Nifty 50 portfolio with an "AI Portfolio Doctor".
 
-## Architecture
+## 🚀 Key Features
+- **AI Portfolio Doctor**: Upload your existing portfolio (via CSV or manual entry) and receive a 0-100 ML Health Score, Expected Return forecasts, Risk/Concentration Alerts, and explicitly targeted rebalancing suggestions.
+- **Explainable AI (XAI)**: SHAP-based justifications are generated for every predicted stock, translating complex ML into simple, human-readable insights directly on the dashboard.
+- **Regime-Aware Risk Adjustments**: A Dynamic Contextual Bandit agent monitors a Hidden Markov Model (HMM) regime detector. In 'Bear' regimes, risk constraints are instantly tightened.
 
-1. **Data Pipeline**: Automatically fetches daily prices from `yfinance`, cleans them, computes returns, and generates a monthly feature matrix including technical indicators (Momentum, RSI, MACD, Volatility) and cross-sectional ranks.
-2. **Return Predictor**: A Random Forest model wrapped in MLflow that predicts one-month forward excess returns, trained using TimeSeriesSplit on pre-2023 data.
-3. **Volatility Forecaster**: Uses `arch` to estimate GARCH(1,1) rolling volatility and `LedoitWolf` shrinkage for covariance.
-4. **Regime Detector**: An HMM (`hmmlearn`) model identifying Bull/Normal/Bear regimes from index returns & volatility.
-5. **Optimizer**: A mean-variance formulation using `cvxpy` that maximizes return minus risk, long-only, max 5% allocation. Blends model risk aversion based on the detected regime.
-6. **API & Dashboard**: FastAPI for serving allocations and Streamlit for an interactive dashboard displaying top holdings and historical metrics.
+## 🏗️ Architecture
 
-## Setup Instructions
+1. **Frontend (Next.js & React)**
+   - **Command Center**: The primary dashboard visualizing pie charts of the target allocation, system KPIs, News Sentiment, XAI justifications, and local custom portfolio warnings.
+   - **Portfolio Risk Analyzer**: A dynamic form allowing users to enter Quantity and Buy Price for custom holdings and instantly simulate ML risk algorithms.
 
-### Local Development
+2. **Backend (FastAPI)**
+   - Serves critical REST endpoints (`/predict`, `/volatility`, `/regime`, `/portfolio`, `/explain`, `/sentiment`, etc.).
+   - Includes complex mathematical aggregations for the `/portfolio_analysis` route to compute overall beta, expected return, and the AI Health Score.
 
-1. Create a virtual environment & install requirements
+3. **ML Pipeline & Orchestration**
+   - **RandomForest Return Predictor**: Predicts 1-month forward returns via cross-sectional fundamental and technical features.
+   - **GARCH Volatility Forecaster**: Estimates covariance matrices.
+   - **HMM Market Regime**: Detects Bull/Bear environments.
+   - **Portfolio Optimizer**: Solves Long-Only, max 20% weight convex optimization (CVXPY) constraints based on risk profiles.
+
+## 💻 Setup Instructions
+
+### 1. Python Environment
+
+Create a virtual environment and install the requirements:
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+# On Windows
+venv\Scripts\activate
+# On Mac/Linux
+source venv/bin/activate
+
 pip install -r requirements.txt
 ```
 
-2. Generate Data and Run Pipeline
+### 2. Frontend Environment
 ```bash
-# 1. Fetch, preprocess, featurize
-python src/data_pipeline/fetch_data.py
-python src/data_pipeline/preprocess.py
-python src/data_pipeline/feature_engineering.py
-python src/data_pipeline/init_db.py
-
-# 2. Train Models
-python src/models/return_predictor/train.py
-python src/models/regime/hmm_train.py
-
-# 3. Predict & Optimize
-python src/models/return_predictor/predict.py
-python src/models/volatility/garch.py
-python src/models/volatility/covariance.py
-python src/models/regime/hmm_predict.py
-python src/optimizer/portfolio.py
-
-# 4. Backtest simulation
-python src/backtesting/backtest.py
+cd frontend
+npm install
+# or yarn install
 ```
 
-### Dashboard & API
-Run the backend API:
+## 🏃 Running the Application
+
+### Step 1: Execute the ML Pipeline
+Instead of running files manually, use the automated batch scripts to safely execute the entire multi-stage data fetching, training, explaining, and optimizing pipeline:
+```bash
+./run_full_pipeline.bat
+```
+*(This will generate the required artifacts like `latest_portfolio.csv` and `latest_predictions.csv` in `data/processed/` that the API needs).*
+
+### Step 2: Start the FastAPI Backend
+In the root directory, with the python environment activated:
 ```bash
 python src/api/main.py
 ```
+*The API will be available at `http://localhost:8000`*
 
-Run the Streamlit Dashboard (in another terminal):
+### Step 3: Start the Next.js Frontend
+In a new terminal window:
 ```bash
-streamlit run src/dashboard/app.py
+cd frontend
+npm run dev
 ```
+*The Dashboard is accessible at `http://localhost:3000/dashboard`*
 
-### Docker Deployment
-Build and run the entire stack using `docker-compose`:
-```bash
-docker-compose up --build
-```
-This spans up a PostgreSQL instance, the FastAPI backend, and the interactive Streamlit Dashboard frontend automatically connected to the API!

@@ -112,7 +112,7 @@ export default function DashboardPage() {
             </div>
 
             {/* KPIs */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="bg-zinc-900 border border-zinc-800 p-5 rounded-xl">
                     <div className="flex items-center gap-2 text-zinc-400 mb-2">
                         <Activity size={16} />
@@ -142,17 +142,6 @@ export default function DashboardPage() {
                     </div>
                     <p className={`text-2xl font-medium ${sentimentColor}`}>
                         {sentimentStr}
-                    </p>
-                </div>
-
-                <div className="bg-zinc-900 border border-zinc-800 p-5 rounded-xl">
-                    <div className="flex items-center gap-2 text-zinc-400 mb-2">
-                        <Layers size={16} />
-                        <h3 className="text-xs uppercase font-semibold tracking-wider">Positions</h3>
-                    </div>
-                    <p className="text-2xl font-medium text-white">
-                        24
-                        <span className="text-sm font-normal text-zinc-500 ml-2">Active</span>
                     </p>
                 </div>
             </div>

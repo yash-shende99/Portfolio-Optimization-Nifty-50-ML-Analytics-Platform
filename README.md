@@ -1,71 +1,138 @@
 # AI-Powered Wealth Manager & Nifty 50 ML System
 
-A production-ready machine learning pipeline and Next.js B2C web platform for forecasting returns, assessing portfolio risk, detecting market regimes, and producing an optimized Nifty 50 portfolio with an "AI Portfolio Doctor".
+A full-stack portfolio analytics and optimization platform built around Indian equity data (Nifty 50). This project combines a data pipeline, machine learning models, and a user-facing dashboard to:
 
-## 🚀 Key Features
-- **AI Portfolio Doctor**: Upload your existing portfolio (via CSV or manual entry) and receive a 0-100 ML Health Score, Expected Return forecasts, Risk/Concentration Alerts, and explicitly targeted rebalancing suggestions.
-- **Explainable AI (XAI)**: SHAP-based justifications are generated for every predicted stock, translating complex ML into simple, human-readable insights directly on the dashboard.
-- **Regime-Aware Risk Adjustments**: A Dynamic Contextual Bandit agent monitors a Hidden Markov Model (HMM) regime detector. In 'Bear' regimes, risk constraints are instantly tightened.
+- Forecast future stock returns using supervised learning
+- Estimate risk and covariance using volatility models
+- Detect market regimes (bull/bear) using Hidden Markov Models
+- Construct an optimized, long-only Nifty 50 portfolio with risk constraints
+- Provide explainable AI (XAI) insights and actionable portfolio health signals
 
-## 🏗️ Architecture
+---
 
-1. **Frontend (Next.js & React)**
-   - **Command Center**: The primary dashboard visualizing pie charts of the target allocation, system KPIs, News Sentiment, XAI justifications, and local custom portfolio warnings.
-   - **Portfolio Risk Analyzer**: A dynamic form allowing users to enter Quantity and Buy Price for custom holdings and instantly simulate ML risk algorithms.
+## 🚀 What This Project Does
 
-2. **Backend (FastAPI)**
-   - Serves critical REST endpoints (`/predict`, `/volatility`, `/regime`, `/portfolio`, `/explain`, `/sentiment`, etc.).
-   - Includes complex mathematical aggregations for the `/portfolio_analysis` route to compute overall beta, expected return, and the AI Health Score.
+### 📈 Data & Feature Pipeline
+- Ingests **historical prices**, **volumes**, and **sentiment signals**.
+- Builds a feature matrix with technical and fundamental signals for each stock.
+- Stores intermediate/processed artifacts under `data/processed/`.
 
-3. **ML Pipeline & Orchestration**
-   - **RandomForest Return Predictor**: Predicts 1-month forward returns via cross-sectional fundamental and technical features.
-   - **GARCH Volatility Forecaster**: Estimates covariance matrices.
-   - **HMM Market Regime**: Detects Bull/Bear environments.
-   - **Portfolio Optimizer**: Solves Long-Only, max 20% weight convex optimization (CVXPY) constraints based on risk profiles.
+### 🤖 Machine Learning Components
+- **Return Predictor (Random Forest)**: Forecasts 1-month forward returns for each stock.
+- **Volatility Model (GARCH / Covariance Estimation)**: Produces covariance matrices used in portfolio optimization.
+- **Market Regime Detector (HMM)**: Labels periods as Bull/Bear to adjust risk targets dynamically.
+- **Portfolio Optimizer (Convex Optimization)**: Solves a constrained optimization problem to generate weights under:
+  - Long-only constraints
+  - Max weight per asset (e.g., 20%)
+  - Regime-aware risk adjustments
 
-## 💻 Setup Instructions
+### 🧠 Explainable AI (XAI)
+- Uses SHAP to produce feature importance explanations for each stock’s predicted return.
+- Provides readable “why” explanations to help users understand model decisions.
 
-### 1. Python Environment
+### 📊 Frontend Dashboard (Next.js)
+- Visualizes target allocations, return/risk forecasts, regime signals, and portfolio health scores.
+- Supports uploading portfolios via CSV or manual entry.
+- Displays risk alerts, concentration warnings, and suggested rebalancing actions.
 
-Create a virtual environment and install the requirements:
+---
+
+## 🗂️ Repository Structure (High Level)
+
+- `src/` – Python backend and ML pipeline code
+  - `api/` – FastAPI app for serving predictions and dashboard data
+  - `data_pipeline/` – Data fetching, feature engineering, preprocessing
+  - `models/` – Training & inference code for returns, volatility, regime, optimizer
+  - `optimizer/` – Portfolio construction logic
+- `frontend/` – Next.js dashboard UI
+- `data/` – Raw and processed datasets used by the pipeline
+- `dags/` – Airflow DAGs for orchestrating the full pipeline (if used)
+- `notebooks/` – Analysis, experiments, and exploratory notebooks
+- `run_full_pipeline.bat` – Convenience script to run the full ETL+training+export pipeline
+
+---
+
+## ✅ Quick Start (Local Development)
+
+### 1) Setup Python Environment
+
 ```bash
 python -m venv venv
-# On Windows
+# Windows
 venv\Scripts\activate
-# On Mac/Linux
+# macOS/Linux
 source venv/bin/activate
 
 pip install -r requirements.txt
 ```
 
-### 2. Frontend Environment
+### 2) Prepare Frontend
+
 ```bash
 cd frontend
 npm install
-# or yarn install
 ```
 
-## 🏃 Running the Application
+### 3) Run the Full Pipeline
 
-### Step 1: Execute the ML Pipeline
-Instead of running files manually, use the automated batch scripts to safely execute the entire multi-stage data fetching, training, explaining, and optimizing pipeline:
+From the repository root:
+
 ```bash
 ./run_full_pipeline.bat
 ```
-*(This will generate the required artifacts like `latest_portfolio.csv` and `latest_predictions.csv` in `data/processed/` that the API needs).*
 
-### Step 2: Start the FastAPI Backend
-In the root directory, with the python environment activated:
+This will:
+- Fetch and preprocess raw data
+- Train models (return predictor, regime detector, volatility)
+- Generate `data/processed/latest_*.csv` artifacts for the API
+
+### 4) Start the Backend
+
+From the repo root (with the venv active):
+
 ```bash
 python src/api/main.py
 ```
-*The API will be available at `http://localhost:8000`*
 
-### Step 3: Start the Next.js Frontend
-In a new terminal window:
+Visit: `http://localhost:8000`
+
+### 5) Start the Frontend
+
+In a new terminal:
+
 ```bash
 cd frontend
 npm run dev
 ```
-*The Dashboard is accessible at `http://localhost:3000/dashboard`*
 
+Visit: `http://localhost:3000/dashboard`
+
+---
+
+## 🔧 Configuration
+
+- `config/config.yaml` holds runtime settings for the pipeline and models.
+- `config/schema.sql` defines the structure for any persistent database schema.
+
+---
+
+## 🧪 Testing
+
+Run the unit tests:
+
+```bash
+python -m pytest
+```
+
+---
+
+## 📌 Notes / Tips
+
+- Make sure the pipeline has run successfully before starting the backend; the API depends on `data/processed/latest_*.csv` artifacts.
+- If you change model code, re-run `run_full_pipeline.bat` to refresh model artifacts.
+
+---
+
+## 📚 Additional Resources
+- `notebooks/` contains exploratory analysis and model evaluation notebooks.
+- `dags/portfolio_pipeline.py` is a starting point for integrating with an Airflow scheduler.

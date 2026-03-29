@@ -1,19 +1,255 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@300;400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --bg-primary: #02050F;
+  --bg-surface: #0A1628;
+  --bg-surface2: #0D1F3C;
+  --bg-glass: rgba(10,22,40,0.8);
+  --cyan: #00D4FF;
+  --cyan-dim: rgba(0,212,255,0.12);
+  --cyan-border: rgba(0,212,255,0.2);
+  --cyan-glow: rgba(0,212,255,0.4);
+  --gold: #F0B942;
+  --gold-dim: rgba(240,185,66,0.15);
+  --gold-border: rgba(240,185,66,0.3);
+  --green: #00FF88;
+  --green-dim: rgba(0,255,136,0.12);
+  --red: #FF4560;
+  --red-dim: rgba(255,69,96,0.12);
+  --text-primary: #E8F4FD;
+  --text-secondary: #7A9BB5;
+  --text-muted: #3A5470;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --font-body: 'Space Grotesk', sans-serif;
+  --glow-cyan: 0 0 24px rgba(0,212,255,0.3);
+  --glow-gold: 0 0 24px rgba(240,185,66,0.3);
+  --glow-green: 0 0 24px rgba(0,255,136,0.3);
+  --shadow-card: 0 8px 32px rgba(0,0,0,0.5);
+  --transition: all 0.3s ease;
+  --transition-fast: all 0.15s ease;
+  --border-cyan: 1px solid rgba(0,212,255,0.2);
+  --border-surface: 1px solid rgba(255,255,255,0.05);
+  --border-gold: 1px solid rgba(240,185,66,0.3);
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  background-image: 
+    linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+
+::selection {
+  background: rgba(0,212,255,0.15);
+  color: var(--cyan);
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0,212,255,0.3);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cyan);
+}
+
+.glass-card {
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: var(--border-cyan);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+  transition: var(--transition);
+}
+.glass-card:hover {
+  border-color: var(--cyan-glow);
+  box-shadow: var(--glow-cyan), var(--shadow-card);
+  transform: translateY(-2px);
+}
+
+.glass-card-gold {
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: var(--border-gold);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+  transition: var(--transition);
+}
+.glass-card-gold:hover {
+  border-color: var(--gold);
+  box-shadow: var(--glow-gold), var(--shadow-card);
+  transform: translateY(-2px);
+}
+
+.btn-cyan {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 10px 24px;
+  background: transparent;
+  border: var(--border-cyan);
+  color: var(--cyan);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+.btn-cyan:hover {
+  background: var(--cyan-dim);
+  box-shadow: var(--glow-cyan);
+}
+
+.btn-gold {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 10px 24px;
+  background: var(--gold);
+  border: none;
+  color: #02050F;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+.btn-gold:hover {
+  box-shadow: var(--glow-gold);
+  transform: translateY(-1px);
+}
+
+.label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.badge-cyan {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  padding: 3px 10px;
+  background: var(--cyan-dim);
+  border: var(--border-cyan);
+  color: var(--cyan);
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge-gold {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  padding: 3px 10px;
+  background: var(--gold-dim);
+  border: var(--border-gold);
+  color: var(--gold);
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge-green {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  padding: 3px 10px;
+  background: var(--green-dim);
+  border: 1px solid rgba(0,255,136,0.3);
+  color: var(--green);
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge-red {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  padding: 3px 10px;
+  background: var(--red-dim);
+  border: 1px solid rgba(255,69,96,0.3);
+  color: var(--red);
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pulse-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(0,255,136,0.4);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 0 6px rgba(0,255,136,0);
+  }
+}
+
+@keyframes tickerScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
 }

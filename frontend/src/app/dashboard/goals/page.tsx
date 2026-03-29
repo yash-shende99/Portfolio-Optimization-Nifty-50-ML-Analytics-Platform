@@ -64,48 +64,161 @@ export default function GoalsPage() {
         }
     };
 
+    // ── Style helpers ──
+    const cardBase: React.CSSProperties = {
+        background: "rgba(10,22,40,0.8)",
+        backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
+        border: "1px solid rgba(0,212,255,0.12)",
+        borderRadius: "12px",
+    };
+
+    const inputStyle: React.CSSProperties = {
+        background: "rgba(2,5,15,0.6)",
+        border: "1px solid rgba(0,212,255,0.12)",
+        color: "#E8F4FD",
+        fontFamily: "'Space Grotesk', sans-serif",
+        fontSize: "0.9rem",
+        borderRadius: "6px",
+        padding: "10px 14px",
+        width: "100%",
+        outline: "none",
+        transition: "all 0.2s ease",
+        marginTop: "6px",
+    };
+
+    const labelStyle: React.CSSProperties = {
+        fontFamily: "'IBM Plex Mono', monospace",
+        fontSize: "0.62rem",
+        letterSpacing: "0.18em",
+        textTransform: "uppercase",
+        color: "#3A5470",
+        display: "block",
+        marginBottom: "6px",
+    };
+
+    const kpiLabel: React.CSSProperties = {
+        fontFamily: "'IBM Plex Mono', monospace",
+        fontSize: "0.6rem",
+        letterSpacing: "0.2em",
+        textTransform: "uppercase",
+        color: "#3A5470",
+        marginBottom: "6px",
+    };
+
+    const kpiValue: React.CSSProperties = {
+        fontFamily: "'Bebas Neue', sans-serif",
+        fontSize: "1.8rem",
+        lineHeight: 1,
+    };
+
     return (
-        <div className="space-y-6">
-            <div>
-                <h2 className="text-2xl font-bold tracking-tight">Goal-Based Investment Planner</h2>
-                <p className="text-zinc-500">Calculate the SIP required to reach your targets.</p>
+        <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+            {/* ── Status Bar ── */}
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <span
+                    className="pulse-dot"
+                    style={{
+                        width: "6px",
+                        height: "6px",
+                        borderRadius: "50%",
+                        background: "#00FF88",
+                        boxShadow: "0 0 8px rgba(0,255,136,0.8)",
+                        flexShrink: 0,
+                    }}
+                />
+                <span
+                    style={{
+                        fontFamily: "'IBM Plex Mono', monospace",
+                        fontSize: "0.65rem",
+                        letterSpacing: "0.15em",
+                        color: "#3A5470",
+                        textTransform: "uppercase",
+                    }}
+                >
+                    Calculate the SIP required to reach your targets
+                </span>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-                {/* Input Form */}
-                <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 h-fit">
-                    <div className="flex items-center gap-2 mb-6 text-white text-lg font-medium">
-                        <Target size={20} className="text-blue-500" /> Goal Parameters
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "1.5rem", alignItems: "start" }}>
+                {/* ══════════ Input Form Panel ══════════ */}
+                <div style={{ ...cardBase, padding: "1.5rem" }}>
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "8px",
+                            marginBottom: "1.5rem",
+                        }}
+                    >
+                        <Target size={20} style={{ color: "#F0B942" }} />
+                        <span
+                            style={{
+                                fontFamily: "'Bebas Neue', sans-serif",
+                                fontSize: "1.3rem",
+                                letterSpacing: "0.1em",
+                                color: "#E8F4FD",
+                                lineHeight: 1.1,
+                            }}
+                        >
+                            Goal Parameters
+                        </span>
                     </div>
 
-                    <form onSubmit={calculateGoal} className="space-y-5">
-                        <div>
-                            <label className="block text-xs font-medium text-zinc-400 mb-1">Target Amount (₹)</label>
+                    <form onSubmit={calculateGoal}>
+                        <div style={{ marginBottom: "1.25rem" }}>
+                            <label style={labelStyle}>Target Amount (₹)</label>
                             <input
                                 type="number"
-                                value={targetAmount} onChange={e => setTargetAmount(Number(e.target.value))}
-                                className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-blue-500"
+                                value={targetAmount}
+                                onChange={e => setTargetAmount(Number(e.target.value))}
+                                style={inputStyle}
+                                onFocus={(e) => {
+                                    e.target.style.borderColor = "#00D4FF";
+                                    e.target.style.boxShadow = "0 0 0 2px rgba(0,212,255,0.1)";
+                                }}
+                                onBlur={(e) => {
+                                    e.target.style.borderColor = "rgba(0,212,255,0.12)";
+                                    e.target.style.boxShadow = "none";
+                                }}
                                 required
                             />
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4">
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.25rem" }}>
                             <div>
-                                <label className="block text-xs font-medium text-zinc-400 mb-1">Time Horizon (Yrs)</label>
+                                <label style={labelStyle}>Time Horizon (Yrs)</label>
                                 <input
                                     type="number"
-                                    value={years} onChange={e => setYears(Number(e.target.value))}
-                                    className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-blue-500"
+                                    value={years}
+                                    onChange={e => setYears(Number(e.target.value))}
+                                    style={inputStyle}
+                                    onFocus={(e) => {
+                                        e.target.style.borderColor = "#00D4FF";
+                                        e.target.style.boxShadow = "0 0 0 2px rgba(0,212,255,0.1)";
+                                    }}
+                                    onBlur={(e) => {
+                                        e.target.style.borderColor = "rgba(0,212,255,0.12)";
+                                        e.target.style.boxShadow = "none";
+                                    }}
                                     required
                                 />
                             </div>
                             <div>
-                                <label className="block text-xs font-medium text-zinc-400 mb-1">Exp. Return (%)</label>
+                                <label style={labelStyle}>Exp. Return (%)</label>
                                 <input
                                     type="number"
-                                    value={expectedReturn} onChange={e => setExpectedReturn(Number(e.target.value))}
-                                    className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-blue-500"
+                                    value={expectedReturn}
+                                    onChange={e => setExpectedReturn(Number(e.target.value))}
+                                    style={inputStyle}
+                                    onFocus={(e) => {
+                                        e.target.style.borderColor = "#00D4FF";
+                                        e.target.style.boxShadow = "0 0 0 2px rgba(0,212,255,0.1)";
+                                    }}
+                                    onBlur={(e) => {
+                                        e.target.style.borderColor = "rgba(0,212,255,0.12)";
+                                        e.target.style.boxShadow = "none";
+                                    }}
                                     required
                                 />
                             </div>
@@ -114,66 +227,183 @@ export default function GoalsPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white font-medium py-2.5 rounded-lg hover:bg-blue-500 transition-colors disabled:opacity-50 mt-4"
+                            style={{
+                                width: "100%",
+                                padding: "12px",
+                                background: "linear-gradient(135deg, #F0B942, #C8901A)",
+                                color: "#02050F",
+                                fontFamily: "'IBM Plex Mono', monospace",
+                                fontSize: "0.72rem",
+                                fontWeight: 700,
+                                letterSpacing: "0.2em",
+                                textTransform: "uppercase",
+                                border: "none",
+                                borderRadius: "6px",
+                                cursor: loading ? "not-allowed" : "pointer",
+                                marginTop: "1rem",
+                                opacity: loading ? 0.5 : 1,
+                                transition: "all 0.2s ease",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                gap: "8px",
+                            }}
+                            onMouseEnter={(e) => {
+                                if (!loading) {
+                                    (e.currentTarget as HTMLElement).style.boxShadow = "0 0 32px rgba(240,185,66,0.4)";
+                                    (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)";
+                                }
+                            }}
+                            onMouseLeave={(e) => {
+                                (e.currentTarget as HTMLElement).style.boxShadow = "none";
+                                (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+                            }}
                         >
-                            <Calculator size={18} />
+                            <Calculator size={16} />
                             {loading ? "Calculating..." : "Calculate SIP"}
                         </button>
                     </form>
                 </div>
 
-                {/* Results & Chart */}
-                <div className="lg:col-span-2 space-y-6">
+                {/* ══════════ Results / Empty State ══════════ */}
+                <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
                     {result ? (
                         <>
-                            <div className="grid grid-cols-3 gap-4">
-                                <div className="bg-zinc-900 border border-zinc-800 p-5 rounded-xl text-center">
-                                    <p className="text-xs font-medium text-zinc-400 uppercase tracking-wider mb-1">Required SIP</p>
-                                    <p className="text-2xl font-bold text-white">₹{result.required_sip.toLocaleString()}<span className="text-sm font-normal text-zinc-500">/mo</span></p>
+                            {/* KPI Cards */}
+                            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem" }}>
+                                {/* Required SIP */}
+                                <div style={{ ...cardBase, padding: "1.25rem 1.5rem", textAlign: "center" }}>
+                                    <p style={kpiLabel}>Required SIP</p>
+                                    <p style={{ ...kpiValue, color: "#00D4FF" }}>
+                                        ₹{result.required_sip.toLocaleString()}
+                                        <span
+                                            style={{
+                                                fontFamily: "'Space Grotesk', sans-serif",
+                                                fontSize: "0.8rem",
+                                                color: "#3A5470",
+                                                marginLeft: "4px",
+                                            }}
+                                        >
+                                            /mo
+                                        </span>
+                                    </p>
                                 </div>
-                                <div className="bg-zinc-900 border border-zinc-800 p-5 rounded-xl text-center">
-                                    <p className="text-xs font-medium text-zinc-400 uppercase tracking-wider mb-1">Total Invested</p>
-                                    <p className="text-2xl font-bold text-white">₹{result.total_investment.toLocaleString()}</p>
+
+                                {/* Total Invested */}
+                                <div style={{ ...cardBase, padding: "1.25rem 1.5rem", textAlign: "center" }}>
+                                    <p style={kpiLabel}>Total Invested</p>
+                                    <p style={{ ...kpiValue, color: "#E8F4FD" }}>
+                                        ₹{result.total_investment.toLocaleString()}
+                                    </p>
                                 </div>
-                                <div className="bg-zinc-900 border border-zinc-800 p-5 rounded-xl text-center">
-                                    <p className="text-xs font-medium text-zinc-400 uppercase tracking-wider mb-1">Wealth Gained</p>
-                                    <p className="text-2xl font-bold text-emerald-400">+₹{result.estimated_wealth_gain.toLocaleString()}</p>
+
+                                {/* Wealth Gained */}
+                                <div style={{ ...cardBase, padding: "1.25rem 1.5rem", textAlign: "center" }}>
+                                    <p style={kpiLabel}>Wealth Gained</p>
+                                    <p style={{ ...kpiValue, color: "#00FF88" }}>
+                                        +₹{result.estimated_wealth_gain.toLocaleString()}
+                                    </p>
                                 </div>
                             </div>
 
-                            <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-xl h-[400px]">
-                                <h3 className="text-sm font-medium text-white mb-6">Compounding Trajectory</h3>
-                                <ResponsiveContainer width="100%" height="90%">
+                            {/* Chart */}
+                            <div style={{ ...cardBase, padding: "1.5rem", height: "420px" }}>
+                                <h3
+                                    style={{
+                                        fontFamily: "'Bebas Neue', sans-serif",
+                                        fontSize: "1.1rem",
+                                        letterSpacing: "0.08em",
+                                        color: "#E8F4FD",
+                                        marginBottom: "1.5rem",
+                                        lineHeight: 1.1,
+                                    }}
+                                >
+                                    Compounding Trajectory
+                                </h3>
+                                <ResponsiveContainer width="100%" height="85%">
                                     <AreaChart data={chartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
                                         <defs>
                                             <linearGradient id="colorInvested" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
-                                                <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+                                                <stop offset="5%" stopColor="#00D4FF" stopOpacity={0.3} />
+                                                <stop offset="95%" stopColor="#00D4FF" stopOpacity={0} />
                                             </linearGradient>
                                             <linearGradient id="colorGrowth" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="5%" stopColor="#10b981" stopOpacity={0.3} />
-                                                <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
+                                                <stop offset="5%" stopColor="#F0B942" stopOpacity={0.3} />
+                                                <stop offset="95%" stopColor="#F0B942" stopOpacity={0} />
                                             </linearGradient>
                                         </defs>
-                                        <CartesianGrid strokeDasharray="3 3" stroke="#27272a" vertical={false} />
-                                        <XAxis dataKey="year" stroke="#71717a" fontSize={12} tickLine={false} axisLine={false} />
-                                        <YAxis stroke="#71717a" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `₹${(value / 100000).toFixed(0)}L`} />
+                                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,212,255,0.05)" vertical={false} />
+                                        <XAxis
+                                            dataKey="year"
+                                            stroke="#1A3550"
+                                            fontSize={10}
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tick={{ fill: "#3A5470", fontFamily: "'IBM Plex Mono', monospace" }}
+                                        />
+                                        <YAxis
+                                            stroke="#1A3550"
+                                            fontSize={10}
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tick={{ fill: "#3A5470", fontFamily: "'IBM Plex Mono', monospace" }}
+                                            tickFormatter={(value) => `₹${(value / 100000).toFixed(0)}L`}
+                                        />
                                         <Tooltip
-                                            contentStyle={{ backgroundColor: '#18181b', borderColor: '#27272a', borderRadius: '8px' }}
-                                            itemStyle={{ color: '#e4e4e7' }}
+                                            contentStyle={{
+                                                backgroundColor: "rgba(2,5,15,0.95)",
+                                                border: "1px solid rgba(0,212,255,0.2)",
+                                                borderRadius: "6px",
+                                                fontFamily: "'IBM Plex Mono', monospace",
+                                                fontSize: "11px",
+                                            }}
+                                            itemStyle={{ color: "#E8F4FD" }}
                                             formatter={(value: number) => `₹${value.toLocaleString()}`}
                                         />
-                                        <Area type="monotone" dataKey="invested" stackId="1" stroke="#3b82f6" fill="url(#colorInvested)" strokeWidth={2} name="Principal" />
-                                        <Area type="monotone" dataKey="growth" stackId="1" stroke="#10b981" fill="url(#colorGrowth)" strokeWidth={2} name="Interest" />
+                                        <Area type="monotone" dataKey="invested" stackId="1" stroke="#00D4FF" fill="url(#colorInvested)" strokeWidth={2} name="Principal" />
+                                        <Area type="monotone" dataKey="growth" stackId="1" stroke="#F0B942" fill="url(#colorGrowth)" strokeWidth={2} name="Interest" />
                                     </AreaChart>
                                 </ResponsiveContainer>
                             </div>
                         </>
                     ) : (
-                        <div className="bg-zinc-900 border border-zinc-800 rounded-xl h-full min-h-[400px] flex flex-col justify-center items-center text-center p-8">
-                            <Calculator size={48} className="text-zinc-800 mb-4" />
-                            <h3 className="text-lg font-medium text-white mb-2">Awaiting Parameters</h3>
-                            <p className="text-zinc-500 max-w-sm">Enter your financial goals on the left to activate the AI compounding simulation.</p>
+                        /* Empty State */
+                        <div
+                            style={{
+                                ...cardBase,
+                                minHeight: "400px",
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                textAlign: "center",
+                                padding: "2rem",
+                            }}
+                        >
+                            <Calculator size={56} style={{ color: "rgba(0,212,255,0.1)", marginBottom: "1rem" }} />
+                            <h3
+                                style={{
+                                    fontFamily: "'Bebas Neue', sans-serif",
+                                    fontSize: "1.4rem",
+                                    color: "#E8F4FD",
+                                    letterSpacing: "0.08em",
+                                    lineHeight: 1.1,
+                                    marginBottom: "0.5rem",
+                                }}
+                            >
+                                Awaiting Parameters
+                            </h3>
+                            <p
+                                style={{
+                                    fontFamily: "'IBM Plex Mono', monospace",
+                                    fontSize: "0.65rem",
+                                    color: "#3A5470",
+                                    letterSpacing: "0.1em",
+                                    maxWidth: "280px",
+                                }}
+                            >
+                                Enter your financial goals on the left to activate the AI compounding simulation.
+                            </p>
                         </div>
                     )}
                 </div>

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Activity, Layers, ShieldAlert, TrendingUp, AlertCircle, ScanLine } from "lucide-react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recharts";
 
-const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#14b8a6', '#f43f5e', '#6366f1'];
+const COLORS = ['#00D4FF', '#F0B942', '#00FF88', '#FF4560', '#7B61FF', '#FF8C00', '#00E5CC', '#FF6B9D', '#4ADE80', '#818CF8'];
 
 export default function DashboardPage() {
     const [profile, setProfile] = useState<any>(null);
@@ -104,58 +104,256 @@ export default function DashboardPage() {
         fetchDashboardData();
     }, []);
 
+    // ── Derived values ──
+    const regimeColor = (() => {
+        const r = regime?.predicted_regime;
+        if (r === "Bull") return "#F0B942";
+        if (r === "Bear") return "#FF4560";
+        return "#7A9BB5";
+    })();
+
+    const sentColor = (() => {
+        if (sentimentStr === "Bullish") return "#00FF88";
+        if (sentimentStr === "Bearish") return "#FF4560";
+        return "#7A9BB5";
+    })();
+
+    // ── Style helpers ──
+    const cardBase: React.CSSProperties = {
+        background: "rgba(10,22,40,0.8)",
+        backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
+        border: "1px solid rgba(0,212,255,0.12)",
+        borderRadius: "12px",
+        transition: "all 0.3s ease",
+    };
+
+    const sectionTitle: React.CSSProperties = {
+        fontFamily: "'Bebas Neue', sans-serif",
+        fontSize: "1.3rem",
+        letterSpacing: "0.08em",
+        color: "#E8F4FD",
+        lineHeight: 1.1,
+    };
+
+    const cyanBadge: React.CSSProperties = {
+        fontFamily: "'IBM Plex Mono', monospace",
+        fontSize: "0.6rem",
+        letterSpacing: "0.15em",
+        textTransform: "uppercase",
+        background: "rgba(0,212,255,0.08)",
+        border: "1px solid rgba(0,212,255,0.15)",
+        color: "#00D4FF",
+        borderRadius: "4px",
+        padding: "3px 10px",
+    };
+
+    const goldBadge: React.CSSProperties = {
+        ...cyanBadge,
+        background: "rgba(240,185,66,0.08)",
+        border: "1px solid rgba(240,185,66,0.2)",
+        color: "#F0B942",
+    };
+
+    const kpiLabel: React.CSSProperties = {
+        fontFamily: "'IBM Plex Mono', monospace",
+        fontSize: "0.6rem",
+        letterSpacing: "0.25em",
+        textTransform: "uppercase",
+        color: "#3A5470",
+    };
+
+    const kpiValue: React.CSSProperties = {
+        fontFamily: "'Bebas Neue', sans-serif",
+        fontSize: "2.2rem",
+        letterSpacing: "0.05em",
+        lineHeight: 1,
+    };
+
+    const kpiSuffix: React.CSSProperties = {
+        fontFamily: "'Space Grotesk', sans-serif",
+        fontSize: "0.8rem",
+        color: "#3A5470",
+        marginLeft: "6px",
+    };
+
     return (
-        <div className="space-y-6">
-            <div>
-                <h2 className="text-2xl font-bold tracking-tight">Command Center</h2>
-                <p className="text-zinc-500">AI-driven real-time portfolio topology and market regime.</p>
+        <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+            {/* ── Status Bar ── */}
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "0rem" }}>
+                <span
+                    className="pulse-dot"
+                    style={{
+                        width: "6px",
+                        height: "6px",
+                        borderRadius: "50%",
+                        background: "#00FF88",
+                        boxShadow: "0 0 8px rgba(0,255,136,0.8)",
+                        flexShrink: 0,
+                    }}
+                />
+                <span
+                    style={{
+                        fontFamily: "'IBM Plex Mono', monospace",
+                        fontSize: "0.65rem",
+                        letterSpacing: "0.15em",
+                        color: "#3A5470",
+                        textTransform: "uppercase",
+                    }}
+                >
+                    AI-driven real-time portfolio topology and market regime.
+                </span>
             </div>
 
-            {/* KPIs */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-zinc-900 border border-zinc-800 p-5 rounded-xl">
-                    <div className="flex items-center gap-2 text-zinc-400 mb-2">
-                        <Activity size={16} />
-                        <h3 className="text-xs uppercase font-semibold tracking-wider">Investable Capital</h3>
+            {/* ── KPI Cards ── */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem" }}>
+                {/* Investable Capital */}
+                <div
+                    style={{ ...cardBase, padding: "1.25rem 1.5rem" }}
+                    onMouseEnter={(e) => {
+                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,212,255,0.3)";
+                        (e.currentTarget as HTMLElement).style.boxShadow = "0 0 24px rgba(0,212,255,0.08)";
+                        (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
+                    }}
+                    onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,212,255,0.12)";
+                        (e.currentTarget as HTMLElement).style.boxShadow = "none";
+                        (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+                    }}
+                >
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <span style={kpiLabel}>Investable Capital</span>
+                        <Activity size={14} style={{ color: "#3A5470" }} />
                     </div>
-                    <p className="text-2xl font-medium text-white">
-                        ₹{(profile?.monthly_savings || 20000).toLocaleString()}
-                        <span className="text-sm font-normal text-zinc-500 ml-1">/ mo</span>
-                    </p>
+                    <div style={{ height: "1px", background: "rgba(0,212,255,0.06)", margin: "0.75rem 0" }} />
+                    <div>
+                        <span style={{ ...kpiValue, color: "#E8F4FD" }}>
+                            ₹{(profile?.monthly_savings || 20000).toLocaleString()}
+                        </span>
+                        <span style={kpiSuffix}>/mo</span>
+                    </div>
                 </div>
 
-                <div className="bg-zinc-900 border border-zinc-800 p-5 rounded-xl">
-                    <div className="flex items-center gap-2 text-zinc-400 mb-2">
-                        <ShieldAlert size={16} />
-                        <h3 className="text-xs uppercase font-semibold tracking-wider">AI Regime</h3>
+                {/* AI Regime */}
+                <div
+                    style={{ ...cardBase, padding: "1.25rem 1.5rem" }}
+                    onMouseEnter={(e) => {
+                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,212,255,0.3)";
+                        (e.currentTarget as HTMLElement).style.boxShadow = "0 0 24px rgba(0,212,255,0.08)";
+                        (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
+                    }}
+                    onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,212,255,0.12)";
+                        (e.currentTarget as HTMLElement).style.boxShadow = "none";
+                        (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+                    }}
+                >
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <span style={kpiLabel}>AI Regime</span>
+                        <ShieldAlert size={14} style={{ color: "#3A5470" }} />
                     </div>
-                    <p className="text-2xl font-medium text-amber-500">
-                        {regime?.predicted_regime || "Bull"}
-                        <span className="text-sm font-normal text-zinc-500 ml-2">Market</span>
-                    </p>
+                    <div style={{ height: "1px", background: "rgba(0,212,255,0.06)", margin: "0.75rem 0" }} />
+                    <div>
+                        <span style={{ ...kpiValue, color: regimeColor }}>
+                            {regime?.predicted_regime || "Bull"}
+                        </span>
+                        <span style={kpiSuffix}>Market</span>
+                    </div>
+                    <div
+                        style={{
+                            height: "2px",
+                            borderRadius: "1px",
+                            marginTop: "0.75rem",
+                            background:
+                                regime?.predicted_regime === "Bear"
+                                    ? "linear-gradient(90deg, #FF4560, #F0B942)"
+                                    : "linear-gradient(90deg, #00FF88, #00D4FF)",
+                        }}
+                    />
                 </div>
 
-                <div className="bg-zinc-900 border border-zinc-800 p-5 rounded-xl">
-                    <div className="flex items-center gap-2 text-zinc-400 mb-2">
-                        <TrendingUp size={16} />
-                        <h3 className="text-xs uppercase font-semibold tracking-wider">News Sentiment</h3>
+                {/* News Sentiment */}
+                <div
+                    style={{ ...cardBase, padding: "1.25rem 1.5rem" }}
+                    onMouseEnter={(e) => {
+                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,212,255,0.3)";
+                        (e.currentTarget as HTMLElement).style.boxShadow = "0 0 24px rgba(0,212,255,0.08)";
+                        (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
+                    }}
+                    onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,212,255,0.12)";
+                        (e.currentTarget as HTMLElement).style.boxShadow = "none";
+                        (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+                    }}
+                >
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <span style={kpiLabel}>News Sentiment</span>
+                        <TrendingUp size={14} style={{ color: "#3A5470" }} />
                     </div>
-                    <p className={`text-2xl font-medium ${sentimentColor}`}>
-                        {sentimentStr}
-                    </p>
+                    <div style={{ height: "1px", background: "rgba(0,212,255,0.06)", margin: "0.75rem 0" }} />
+                    <div>
+                        <span style={{ ...kpiValue, color: sentColor }}>
+                            {sentimentStr}
+                        </span>
+                    </div>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden min-h-[400px] flex flex-col justify-center items-center relative p-6">
-                    <h3 className="w-full text-left text-lg font-medium mb-4 text-white z-10">Current Target Allocation</h3>
+            {/* ── Allocation Chart + XAI Panel ── */}
+            <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "1.5rem" }}>
+                {/* Allocation Chart */}
+                <div
+                    style={{
+                        ...cardBase,
+                        padding: "1.5rem",
+                        minHeight: "420px",
+                        display: "flex",
+                        flexDirection: "column",
+                        position: "relative",
+                        overflow: "hidden",
+                    }}
+                >
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem", zIndex: 1 }}>
+                        <span style={sectionTitle}>Current Target Allocation</span>
+                        <span style={cyanBadge}>LIVE WEIGHTS</span>
+                    </div>
+
                     {loadingAlloc ? (
-                        <div className="flex flex-col items-center justify-center text-zinc-500 z-10">
-                            <AlertCircle size={48} className="text-zinc-700 mb-4 animate-pulse" />
-                            <p>Generating optimal weights...</p>
+                        <div
+                            style={{
+                                flex: 1,
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                gap: "12px",
+                                zIndex: 1,
+                            }}
+                        >
+                            <span
+                                style={{
+                                    fontFamily: "'IBM Plex Mono', monospace",
+                                    fontSize: "0.7rem",
+                                    letterSpacing: "0.2em",
+                                    textTransform: "uppercase",
+                                    color: "#3A5470",
+                                }}
+                            >
+                                GENERATING OPTIMAL WEIGHTS...
+                            </span>
+                            <div
+                                style={{
+                                    width: "200px",
+                                    height: "2px",
+                                    background: "linear-gradient(90deg, transparent, #00D4FF, transparent)",
+                                    backgroundSize: "200% 100%",
+                                    animation: "shimmer 1.5s infinite",
+                                    borderRadius: "1px",
+                                }}
+                            />
                         </div>
                     ) : allocations.length > 0 ? (
-                        <div className="w-full h-full min-h-[350px] z-10 flex items-center justify-center">
+                        <div style={{ flex: 1, minHeight: "350px", zIndex: 1 }}>
                             <ResponsiveContainer width="100%" height="100%">
                                 <PieChart>
                                     <Pie
@@ -174,108 +372,425 @@ export default function DashboardPage() {
                                     </Pie>
                                     <Tooltip
                                         formatter={(value: any) => [`${value}%`, 'Target Weight']}
-                                        contentStyle={{ backgroundColor: '#18181b', borderColor: '#27272a', borderRadius: '8px', color: '#fff' }}
+                                        contentStyle={{
+                                            backgroundColor: "rgba(2,5,15,0.95)",
+                                            border: "1px solid rgba(0,212,255,0.2)",
+                                            borderRadius: "6px",
+                                            color: "#E8F4FD",
+                                            fontFamily: "'IBM Plex Mono', monospace",
+                                            fontSize: "0.72rem",
+                                        }}
                                     />
-                                    <Legend layout="vertical" verticalAlign="middle" align="right" wrapperStyle={{ fontSize: '12px', color: '#a1a1aa' }} />
+                                    <Legend
+                                        layout="vertical"
+                                        verticalAlign="middle"
+                                        align="right"
+                                        wrapperStyle={{
+                                            fontSize: "11px",
+                                            color: "#7A9BB5",
+                                            fontFamily: "'IBM Plex Mono', monospace",
+                                        }}
+                                    />
                                 </PieChart>
                             </ResponsiveContainer>
                         </div>
                     ) : (
-                        <div className="flex flex-col items-center justify-center text-zinc-500 z-10">
-                            <AlertCircle size={48} className="text-zinc-700 mb-4" />
-                            <p>No valid portfolio weights found for current risk profile.</p>
+                        <div
+                            style={{
+                                flex: 1,
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                gap: "12px",
+                                zIndex: 1,
+                            }}
+                        >
+                            <AlertCircle size={40} style={{ color: "#1A3550" }} />
+                            <span
+                                style={{
+                                    fontFamily: "'IBM Plex Mono', monospace",
+                                    fontSize: "0.7rem",
+                                    letterSpacing: "0.15em",
+                                    color: "#3A5470",
+                                    textTransform: "uppercase",
+                                }}
+                            >
+                                No valid portfolio weights found for current risk profile.
+                            </span>
                         </div>
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 pointer-events-none" />
+
+                    {/* Subtle gradient overlay */}
+                    <div
+                        style={{
+                            position: "absolute",
+                            inset: 0,
+                            background: "linear-gradient(135deg, rgba(0,212,255,0.02) 0%, rgba(123,97,255,0.02) 100%)",
+                            pointerEvents: "none",
+                            borderRadius: "12px",
+                        }}
+                    />
                 </div>
 
-                <div className="space-y-6">
-                    <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
-                        <h3 className="text-lg font-medium mb-4 flex items-center justify-between">
-                            AI Explainer (XAI)
-                            <span className="text-xs font-normal text-zinc-500 bg-zinc-800 px-2 py-1 rounded">SHAP Values</span>
-                        </h3>
-                        <div className="space-y-4">
-                            {loadingXAI ? (
-                                <div className="text-zinc-500 text-sm animate-pulse">Computing feature attributions...</div>
-                            ) : explanations.length > 0 ? (
-                                explanations.map((exp: any, i: number) => (
-                                    <div key={i} className="p-3 bg-zinc-950 rounded border border-zinc-800 text-sm text-zinc-300">
-                                        <span className="text-blue-400 font-medium tracking-wide">{exp.ticker}:</span> {exp.justification}
-                                    </div>
-                                ))
-                            ) : (
-                                <div className="text-zinc-500 text-sm">No explanations available.</div>
-                            )}
-                            {regime && regime.predicted_regime === "Bear" && (
-                                <div className="p-3 bg-red-950/20 border border-red-900/50 rounded text-sm text-zinc-300">
-                                    <span className="text-red-400 font-medium tracking-wide">RL BANDIT:</span> Risk tolerance dynamically shifted downward to offset high Bear regime probabilities ({Math.round((regime.bear_prob || 0) * 100)}%).
+                {/* XAI Explainer */}
+                <div style={{ ...cardBase, padding: "1.5rem" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem" }}>
+                        <span style={sectionTitle}>AI Explainer (XAI)</span>
+                        <span style={goldBadge}>SHAP VALUES</span>
+                    </div>
+
+                    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                        {loadingXAI ? (
+                            <span
+                                style={{
+                                    fontFamily: "'IBM Plex Mono', monospace",
+                                    fontSize: "0.65rem",
+                                    color: "#3A5470",
+                                    letterSpacing: "0.2em",
+                                    textTransform: "uppercase",
+                                }}
+                            >
+                                COMPUTING ATTRIBUTIONS...
+                            </span>
+                        ) : explanations.length > 0 ? (
+                            explanations.map((exp: any, i: number) => (
+                                <div
+                                    key={i}
+                                    style={{
+                                        background: "rgba(2,5,15,0.6)",
+                                        border: "1px solid rgba(0,212,255,0.1)",
+                                        borderRadius: "8px",
+                                        padding: "12px",
+                                        borderLeft: "2px solid #00D4FF",
+                                    }}
+                                >
+                                    <span
+                                        style={{
+                                            fontFamily: "'IBM Plex Mono', monospace",
+                                            fontSize: "0.7rem",
+                                            letterSpacing: "0.15em",
+                                            color: "#00D4FF",
+                                            fontWeight: 600,
+                                        }}
+                                    >
+                                        {exp.ticker}
+                                    </span>
+                                    <p
+                                        style={{
+                                            fontFamily: "'Space Grotesk', sans-serif",
+                                            fontSize: "0.8rem",
+                                            color: "#7A9BB5",
+                                            marginTop: "4px",
+                                            lineHeight: 1.5,
+                                            margin: "4px 0 0 0",
+                                        }}
+                                    >
+                                        {exp.justification}
+                                    </p>
                                 </div>
-                            )}
-                        </div>
+                            ))
+                        ) : (
+                            <span
+                                style={{
+                                    fontFamily: "'IBM Plex Mono', monospace",
+                                    fontSize: "0.7rem",
+                                    color: "#3A5470",
+                                }}
+                            >
+                                No explanations available.
+                            </span>
+                        )}
+
+                        {regime && regime.predicted_regime === "Bear" && (
+                            <div
+                                style={{
+                                    background: "rgba(255,69,96,0.05)",
+                                    border: "1px solid rgba(255,69,96,0.15)",
+                                    borderRadius: "8px",
+                                    padding: "12px",
+                                    borderLeft: "2px solid #FF4560",
+                                }}
+                            >
+                                <span
+                                    style={{
+                                        fontFamily: "'IBM Plex Mono', monospace",
+                                        fontSize: "0.7rem",
+                                        letterSpacing: "0.15em",
+                                        color: "#FF4560",
+                                        fontWeight: 600,
+                                    }}
+                                >
+                                    RL BANDIT
+                                </span>
+                                <p
+                                    style={{
+                                        fontFamily: "'Space Grotesk', sans-serif",
+                                        fontSize: "0.8rem",
+                                        color: "#7A9BB5",
+                                        marginTop: "4px",
+                                        lineHeight: 1.5,
+                                        margin: "4px 0 0 0",
+                                    }}
+                                >
+                                    Risk tolerance dynamically shifted downward to offset high Bear regime probabilities ({Math.round((regime.bear_prob || 0) * 100)}%).
+                                </p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
 
-            {/* Custom Portfolio Recommendations Panel */}
+            {/* ── AI Portfolio Doctor ── */}
             {customAnalysis && customAnalysis.recommendations && (
-                <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 mt-6">
-                    <div className="flex items-center justify-between mb-6">
-                        <h3 className="text-lg font-medium text-white flex items-center gap-2">
-                            <ScanLine className="text-purple-500" size={20} /> AI Portfolio Doctor
-                        </h3>
+                <div
+                    style={{
+                        ...cardBase,
+                        border: "1px solid rgba(123,97,255,0.2)",
+                        padding: "1.5rem",
+                    }}
+                >
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.5rem" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                            <ScanLine size={20} style={{ color: "#7B61FF" }} />
+                            <span style={sectionTitle}>AI Portfolio Doctor</span>
+                        </div>
                         {customAnalysis.health_score !== undefined && (
-                            <div className="flex gap-6 items-center">
-                                <div className="text-right">
-                                    <p className="text-[10px] font-semibold text-zinc-500 uppercase tracking-widest">Expected Return</p>
-                                    <p className="text-xl font-bold text-emerald-400">{customAnalysis.expected_return}%</p>
+                            <div style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
+                                <div style={{ textAlign: "right" }}>
+                                    <p
+                                        style={{
+                                            fontFamily: "'IBM Plex Mono', monospace",
+                                            fontSize: "0.55rem",
+                                            letterSpacing: "0.25em",
+                                            color: "#3A5470",
+                                            textTransform: "uppercase",
+                                            margin: 0,
+                                        }}
+                                    >
+                                        Expected Return
+                                    </p>
+                                    <p
+                                        style={{
+                                            fontFamily: "'Bebas Neue', sans-serif",
+                                            fontSize: "1.8rem",
+                                            color: "#00FF88",
+                                            lineHeight: 1,
+                                            margin: "4px 0 0 0",
+                                        }}
+                                    >
+                                        {customAnalysis.expected_return}%
+                                    </p>
                                 </div>
-                                <div className="text-right">
-                                    <p className="text-[10px] font-semibold text-zinc-500 uppercase tracking-widest">Health Score</p>
-                                    <p className="text-xl font-bold text-white">{customAnalysis.health_score} <span className="text-sm text-zinc-500">/ 100</span></p>
+                                <div style={{ textAlign: "right" }}>
+                                    <p
+                                        style={{
+                                            fontFamily: "'IBM Plex Mono', monospace",
+                                            fontSize: "0.55rem",
+                                            letterSpacing: "0.25em",
+                                            color: "#3A5470",
+                                            textTransform: "uppercase",
+                                            margin: 0,
+                                        }}
+                                    >
+                                        Health Score
+                                    </p>
+                                    <p
+                                        style={{
+                                            fontFamily: "'Bebas Neue', sans-serif",
+                                            fontSize: "1.8rem",
+                                            color: "#E8F4FD",
+                                            lineHeight: 1,
+                                            margin: "4px 0 0 0",
+                                        }}
+                                    >
+                                        {customAnalysis.health_score}
+                                        <span
+                                            style={{
+                                                fontFamily: "'Space Grotesk', sans-serif",
+                                                fontSize: "0.8rem",
+                                                color: "#3A5470",
+                                                marginLeft: "4px",
+                                            }}
+                                        >
+                                            / 100
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                         )}
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
                         {customAnalysis.recommendations.map((rec: string, i: number) => (
-                            <div key={i} className="p-4 bg-zinc-950 border border-zinc-800 rounded-lg text-zinc-300 relative overflow-hidden flex items-start gap-3">
-                                <div className="absolute left-0 top-0 bottom-0 w-1 bg-purple-500"></div>
-                                <AlertCircle className="text-purple-500 mt-0.5 shrink-0" size={16} />
-                                <span>{rec}</span>
+                            <div
+                                key={i}
+                                style={{
+                                    background: "rgba(2,5,15,0.5)",
+                                    border: "1px solid rgba(123,97,255,0.15)",
+                                    borderLeft: "2px solid #7B61FF",
+                                    borderRadius: "8px",
+                                    padding: "1rem",
+                                    display: "flex",
+                                    alignItems: "flex-start",
+                                    gap: "10px",
+                                }}
+                            >
+                                <AlertCircle size={16} style={{ color: "#7B61FF", marginTop: "2px", flexShrink: 0 }} />
+                                <span
+                                    style={{
+                                        fontFamily: "'Space Grotesk', sans-serif",
+                                        fontSize: "0.82rem",
+                                        color: "#7A9BB5",
+                                        lineHeight: 1.5,
+                                    }}
+                                >
+                                    {rec}
+                                </span>
                             </div>
                         ))}
                     </div>
                 </div>
             )}
 
-            {/* Detailed Portfolio Breakdown Table */}
-            <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden mt-6">
-                <div className="p-6 border-b border-zinc-800">
-                    <h3 className="text-lg font-medium text-white">Target Stock Details & ML Explanations</h3>
-                    <p className="text-sm text-zinc-500 mt-1">Full breakdown of algorithmic selection and asset sizing.</p>
+            {/* ── Target Stock Details Table ── */}
+            <div
+                style={{
+                    ...cardBase,
+                    overflow: "hidden",
+                }}
+            >
+                <div
+                    style={{
+                        padding: "1.25rem 1.5rem",
+                        borderBottom: "1px solid rgba(0,212,255,0.08)",
+                    }}
+                >
+                    <h3 style={{ ...sectionTitle, fontSize: "1.2rem" }}>
+                        Target Stock Details & ML Explanations
+                    </h3>
+                    <p
+                        style={{
+                            fontFamily: "'Space Grotesk', sans-serif",
+                            fontSize: "0.78rem",
+                            color: "#3A5470",
+                            marginTop: "4px",
+                        }}
+                    >
+                        Full breakdown of algorithmic selection and asset sizing.
+                    </p>
                 </div>
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left text-sm text-zinc-400">
-                        <thead className="bg-zinc-950/50 text-xs uppercase font-medium text-zinc-500 border-b border-zinc-800">
-                            <tr>
-                                <th className="px-6 py-4">Asset Ticker</th>
-                                <th className="px-6 py-4">Target Weight</th>
-                                <th className="px-6 py-4">Algorithm Justification (SHAP)</th>
+
+                <div style={{ overflowX: "auto" }}>
+                    <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left" }}>
+                        <thead>
+                            <tr
+                                style={{
+                                    background: "rgba(2,5,15,0.6)",
+                                    borderBottom: "1px solid rgba(0,212,255,0.08)",
+                                }}
+                            >
+                                <th
+                                    style={{
+                                        fontFamily: "'IBM Plex Mono', monospace",
+                                        fontSize: "0.6rem",
+                                        letterSpacing: "0.2em",
+                                        textTransform: "uppercase",
+                                        color: "#3A5470",
+                                        padding: "14px 24px",
+                                        fontWeight: 500,
+                                    }}
+                                >
+                                    Asset Ticker
+                                </th>
+                                <th
+                                    style={{
+                                        fontFamily: "'IBM Plex Mono', monospace",
+                                        fontSize: "0.6rem",
+                                        letterSpacing: "0.2em",
+                                        textTransform: "uppercase",
+                                        color: "#3A5470",
+                                        padding: "14px 24px",
+                                        fontWeight: 500,
+                                    }}
+                                >
+                                    Target Weight
+                                </th>
+                                <th
+                                    style={{
+                                        fontFamily: "'IBM Plex Mono', monospace",
+                                        fontSize: "0.6rem",
+                                        letterSpacing: "0.2em",
+                                        textTransform: "uppercase",
+                                        color: "#3A5470",
+                                        padding: "14px 24px",
+                                        fontWeight: 500,
+                                    }}
+                                >
+                                    Algorithm Justification (SHAP)
+                                </th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-zinc-800">
+                        <tbody>
                             {allocations.map((alloc, idx) => {
                                 const exp = allExplanations.find(e => e.ticker.replace('.NS', '') === alloc.name);
                                 return (
-                                    <tr key={idx} className="hover:bg-zinc-800/20 transition-colors">
-                                        <td className="px-6 py-4 font-medium text-white">{alloc.name}</td>
-                                        <td className="px-6 py-4 text-emerald-400 font-medium">{alloc.value}%</td>
-                                        <td className="px-6 py-4">
+                                    <tr
+                                        key={idx}
+                                        style={{
+                                            borderBottom: "1px solid rgba(0,212,255,0.05)",
+                                            transition: "background 0.2s ease",
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            (e.currentTarget as HTMLElement).style.background = "rgba(0,212,255,0.03)";
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            (e.currentTarget as HTMLElement).style.background = "transparent";
+                                        }}
+                                    >
+                                        <td
+                                            style={{
+                                                padding: "14px 24px",
+                                                fontFamily: "'IBM Plex Mono', monospace",
+                                                fontSize: "0.8rem",
+                                                color: "#00D4FF",
+                                                letterSpacing: "0.1em",
+                                            }}
+                                        >
+                                            {alloc.name}
+                                        </td>
+                                        <td
+                                            style={{
+                                                padding: "14px 24px",
+                                                fontFamily: "'IBM Plex Mono', monospace",
+                                                fontSize: "0.8rem",
+                                                color: "#00FF88",
+                                            }}
+                                        >
+                                            {alloc.value}%
+                                        </td>
+                                        <td style={{ padding: "14px 24px" }}>
                                             {exp ? (
-                                                <span className="text-zinc-300">{exp.justification}</span>
+                                                <span
+                                                    style={{
+                                                        fontFamily: "'Space Grotesk', sans-serif",
+                                                        fontSize: "0.78rem",
+                                                        color: "#7A9BB5",
+                                                    }}
+                                                >
+                                                    {exp.justification}
+                                                </span>
                                             ) : (
-                                                <span className="text-zinc-600 italic">No attribution data available</span>
+                                                <span
+                                                    style={{
+                                                        fontFamily: "'IBM Plex Mono', monospace",
+                                                        fontSize: "0.7rem",
+                                                        color: "#1A3550",
+                                                        fontStyle: "italic",
+                                                    }}
+                                                >
+                                                    No attribution data available
+                                                </span>
                                             )}
                                         </td>
                                     </tr>
@@ -284,7 +799,19 @@ export default function DashboardPage() {
                         </tbody>
                     </table>
                     {allocations.length === 0 && (
-                        <div className="p-8 text-center text-zinc-500">Pipeline analysis currently unavailable.</div>
+                        <div
+                            style={{
+                                padding: "2rem",
+                                textAlign: "center",
+                                fontFamily: "'IBM Plex Mono', monospace",
+                                fontSize: "0.7rem",
+                                color: "#3A5470",
+                                letterSpacing: "0.15em",
+                                textTransform: "uppercase",
+                            }}
+                        >
+                            Pipeline analysis currently unavailable.
+                        </div>
                     )}
                 </div>
             </div>

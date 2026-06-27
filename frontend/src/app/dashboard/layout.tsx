@@ -11,6 +11,42 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     const [loading, setLoading] = useState(true);
     const [profile, setProfile] = useState<any>(null);
     const [clockTime, setClockTime] = useState("");
+    const [isRiskModalOpen, setIsRiskModalOpen] = useState(false);
+    const [newRiskLevel, setNewRiskLevel] = useState(5);
+    const [isUpdatingRisk, setIsUpdatingRisk] = useState(false);
+
+    const handleUpdateRisk = async () => {
+        setIsUpdatingRisk(true);
+        try {
+            const token = localStorage.getItem("token");
+            const payload = {
+                age: profile?.age || 30,
+                income: profile?.income || 1000000,
+                monthly_savings: profile?.monthly_savings || 20000,
+                risk_tolerance: newRiskLevel,
+                goals: profile?.goals || []
+            };
+
+            const res = await fetch("http://localhost:8000/auth/profile", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (res.ok) {
+                setProfile({ ...profile, risk_tolerance: newRiskLevel });
+                setIsRiskModalOpen(false);
+                window.location.reload();
+            }
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setIsUpdatingRisk(false);
+        }
+    };
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -312,12 +348,26 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 >
                     {/* Risk Profile Card */}
                     <div
+                        onClick={() => {
+                            setNewRiskLevel(profile?.risk_tolerance || 5);
+                            setIsRiskModalOpen(true);
+                        }}
                         style={{
                             background: "rgba(2,5,15,0.6)",
                             border: "1px solid rgba(0,212,255,0.12)",
                             borderRadius: "8px",
                             padding: "10px 12px",
                             marginBottom: "8px",
+                            cursor: "pointer",
+                            transition: "all 0.2s ease",
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.background = "rgba(0,212,255,0.05)";
+                            e.currentTarget.style.borderColor = "rgba(0,212,255,0.3)";
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.background = "rgba(2,5,15,0.6)";
+                            e.currentTarget.style.borderColor = "rgba(0,212,255,0.12)";
                         }}
                     >
                         <span
@@ -489,6 +539,66 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     </div>
                 </main>
             </div>
+            {/* Risk Profile Modal */}
+            {isRiskModalOpen && (
+                <div style={{
+                    position: "fixed", top: 0, left: 0, width: "100%", height: "100%",
+                    background: "rgba(2,5,15,0.8)", backdropFilter: "blur(10px)",
+                    display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000
+                }}>
+                    <div style={{
+                        background: "rgba(10,22,40,0.95)", border: "1px solid rgba(0,212,255,0.2)",
+                        borderRadius: "12px", padding: "2rem", width: "400px",
+                        boxShadow: "0 0 30px rgba(0,212,255,0.1)",
+                    }}>
+                        <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: "1.5rem", color: "#E8F4FD", margin: "0 0 1rem 0", letterSpacing: "0.05em" }}>
+                            UPDATE RISK PROFILE
+                        </h2>
+                        <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.85rem", color: "#3A5470", marginBottom: "2rem" }}>
+                            Adjust your risk tolerance level. This will instantly recalibrate your AI portfolio recommendations.
+                        </p>
+                        
+                        <div style={{ marginBottom: "2rem" }}>
+                            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem" }}>
+                                <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.75rem", color: "#00D4FF" }}>LEVEL {newRiskLevel}</span>
+                                <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.75rem", color: "#3A5470" }}>MAX 10</span>
+                            </div>
+                            <input
+                                type="range"
+                                min="1"
+                                max="10"
+                                value={newRiskLevel}
+                                onChange={(e) => setNewRiskLevel(parseInt(e.target.value))}
+                                style={{ width: "100%", accentColor: "#00D4FF", cursor: "pointer" }}
+                            />
+                        </div>
+
+                        <div style={{ display: "flex", gap: "1rem", justifyContent: "flex-end" }}>
+                            <button
+                                onClick={() => setIsRiskModalOpen(false)}
+                                style={{
+                                    padding: "8px 16px", background: "transparent", border: "1px solid rgba(255,255,255,0.1)",
+                                    borderRadius: "6px", color: "#E8F4FD", cursor: "pointer", fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.85rem"
+                                }}
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleUpdateRisk}
+                                disabled={isUpdatingRisk}
+                                style={{
+                                    padding: "8px 16px", background: "rgba(0,212,255,0.1)", border: "1px solid #00D4FF",
+                                    borderRadius: "6px", color: "#00D4FF", cursor: isUpdatingRisk ? "not-allowed" : "pointer",
+                                    fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.85rem",
+                                    boxShadow: "0 0 10px rgba(0,212,255,0.2)"
+                                }}
+                            >
+                                {isUpdatingRisk ? "Updating..." : "Save Changes"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

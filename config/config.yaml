@@ -63,19 +63,19 @@ data:
   processed_dir: "data/processed"
 
 database:
-  url: "sqlite:///data/portfolio.db" # Defaulting to sqlite for local dev, can be replaced by postgres url
+  url: "sqlite:///data/portfolio.db" # Production uses PostgreSQL via DATABASE_URL env var
 
 model:
   return_predictor:
-    type: "random_forest"
-    rf_params:
+    type: "lightgbm"
+    lgbm_params:
       n_estimators: 100
       max_depth: 5
-      min_samples_split: 10
+      learning_rate: 0.05
       random_state: 42
     target_clip: [0.01, 0.99]
     split_year: 2023
-    model_path: "src/models/return_predictor/rf_model.joblib"
+    model_path: "src/models/return_predictor/lgbm_model.joblib"
     
   volatility:
     garch_window: 756 # ~3 years

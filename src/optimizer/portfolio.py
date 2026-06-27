@@ -24,7 +24,7 @@ def optimize_portfolio():
     config = load_config()
     max_weight = config["optimizer"]["max_weight"]
     
-    mu_series, cov_df, _ = fuse_predictions()
+    mu_series, cov_df, dynamic_lambda = fuse_predictions()
     
     if mu_series is None or cov_df is None:
         logger.error("Failed to retrieve fused predictions. Aborting optimization.")
@@ -53,7 +53,10 @@ def optimize_portfolio():
         w = cp.Variable(n_assets)
         expected_return = mu.T @ w
         risk = cp.quad_form(w, Sigma)
-        objective = cp.Maximize(expected_return - rt_round * risk)
+        
+        # Regime-aware risk adjustment
+        effective_risk_penalty = rt_round * dynamic_lambda
+        objective = cp.Maximize(expected_return - effective_risk_penalty * risk)
         
         constraints = [
             cp.sum(w) == 1,

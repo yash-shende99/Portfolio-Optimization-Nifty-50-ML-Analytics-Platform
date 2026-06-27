@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 def generate_explanations():
     base_path = Path(__file__).parent.parent.parent.parent
-    model_path = base_path / "src" / "models" / "return_predictor" / "rf_model.joblib"
+    model_path = base_path / "src" / "models" / "return_predictor" / "lgbm_model.joblib"
     features_path = base_path / "data" / "processed" / "feature_matrix.csv"
     
     if not model_path.exists() or not features_path.exists():

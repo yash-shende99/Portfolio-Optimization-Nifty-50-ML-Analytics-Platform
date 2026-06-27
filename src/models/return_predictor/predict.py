@@ -22,7 +22,7 @@ def predict_returns():
         logger.error(f"Model not found at {model_path}. Train the model first.")
         return
         
-    logger.info("Loading Random Forest model...")
+    logger.info("Loading LightGBM model...")
     model = joblib.load(model_path)
     # We can also load bounds if we want to clip outputs, but tree predictions are naturally bounded.
     

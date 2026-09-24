@@ -30,7 +30,7 @@ How is this different from Zerodha / smallcase / mutual funds?
 - My system: Dynamic, mathematically optimized, AI-predicted, and fully transparent.
 
 What are the key components of your system? 
-1. Feature Pipeline. 2. ML Predictors (RF/LightGBM). 3. Volatility/Covariance Estimators (GARCH). 4. Regime Detector (HMM). 5. Convex Optimizer. 6. FastAPI Backend. 7. Next.js Frontend.
+1. Feature Pipeline. 2. ML Predictors (LightGBM). 3. Volatility/Covariance Estimators (GARCH). 4. Regime Detector (HMM). 5. Convex Optimizer. 6. FastAPI Backend. 7. Next.js Frontend.
 
 Explain the end-to-end pipeline: Fetch historical Nifty 50 data -> Engineer features (RSI, standard deviation, volume) -> Train classifiers & regressors -> Export models -> FastAPI loads models & serves predictions -> Frontend requests portfolio weights & XAI details -> Display to user.
 

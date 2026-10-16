@@ -1,107 +1,369 @@
-# Nifty 50 AI Portfolio Optimization & Quantitative Wealth Platform
+# 🚀 Nifty 50 AI Portfolio Optimization & Quantitative Wealth Platform
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg?logo=python&logoColor=white)](#prerequisites)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-009688.svg?logo=fastapi&logoColor=white)](#technology-stack)
-[![Next.js](https://img.shields.io/badge/Next.js-16.1-black.svg?logo=next.js&logoColor=white)](#technology-stack)
-[![React](https://img.shields.io/badge/React-19.2-61DAFB.svg?logo=react&logoColor=black)](#technology-stack)
-[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4-38B2AC.svg?logo=tailwind-css&logoColor=white)](#technology-stack)
-[![CVXPY](https://img.shields.io/badge/Optimizer-CVXPY-orange.svg)](#technology-stack)
-[![Tests](https://img.shields.io/badge/Tests-Passing%20(pytest)-brightgreen.svg)](#testing-and-code-quality)
+<div align="center">
 
-An end-to-end quantitative portfolio engineering and robo-advisory platform designed for Indian equity markets (**Nifty 50 constituents**). The platform combines automated data ingestion, multi-factor feature engineering, supervised return forecasting, econometric volatility modeling, hidden Markov regime detection, explainable AI (SHAP), and convex portfolio optimization (Markowitz mean-variance with dynamic risk aversion).
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-16.1-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-The system serves both retail and quantitative workflows through a high-performance **FastAPI backend** and an interactive **Next.js 16 + React 19 web dashboard**, supplemented by an analytical **Streamlit interface**.
+![CVXPY](https://img.shields.io/badge/Optimizer-CVXPY-FF6B35?style=for-the-badge)
+![LightGBM](https://img.shields.io/badge/ML-LightGBM-2C8EBB?style=for-the-badge)
+![SHAP](https://img.shields.io/badge/XAI-SHAP-8A2BE2?style=for-the-badge)
+![Tests](https://img.shields.io/badge/Tests-Passing%20(pytest)-00C853?style=for-the-badge)
+![License](https://img.shields.io/badge/License-ISC-yellow?style=for-the-badge)
 
----
+<br>
 
-## Table of Contents
+> ### ⚡ An end-to-end quantitative portfolio engineering & robo-advisory platform for Indian equity markets
+>
+> **Nifty 50 constituents** · Automated ingestion · Multi-factor ML · GARCH volatility · HMM regimes · SHAP explainability · CVXPY convex optimization
 
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [Visual Artifacts & Model Explainability](#visual-artifacts--model-explainability)
-- [Architecture Overview](#architecture-overview)
-- [Technology Stack](#technology-stack)
-- [Repository Structure](#repository-structure)
-- [Prerequisites](#prerequisites)
-- [Installation and Setup](#installation-and-setup)
-- [Environment Variables and Configuration](#environment-variables-and-configuration)
-- [Running the Application](#running-the-application)
-- [How to Use the Application](#how-to-use-the-application)
-- [API Documentation](#api-documentation)
-- [Database and Data Management](#database-and-data-management)
-- [Testing and Code Quality](#testing-and-code-quality)
-- [Deployment & Containerization](#deployment--containerization)
-- [Security and Hardening Considerations](#security-and-hardening-considerations)
-- [Troubleshooting & FAQ](#troubleshooting--faq)
-- [Known Limitations](#known-limitations)
-- [Roadmap](#roadmap)
-- [Contributing](#contributing)
-- [Licence](#licence)
-- [Acknowledgements & References](#acknowledgements--references)
-- [Project Links & In-Depth Documentation](#project-links--in-depth-documentation)
+<br>
 
----
+<table align="center">
+<tr><td>
 
-## Overview
+```
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║    ┌──────────────────────────────────────────────────────────────────┐      ║
+║    │ ███╗   ██╗██╗███████╗████████╗██╗   ██╗    ███████╗ ██████╗      │      ║
+║    │ ████╗  ██║██║██╔════╝╚══██╔══╝╚██╗ ██╔╝    ██╔════╝██╔═████╗     │      ║
+║    │ ██╔██╗ ██║██║█████╗     ██║    ╚████╔╝     ███████╗██║██╔██║     │      ║
+║    │ ██║╚██╗██║██║██╔══╝     ██║     ╚██╔╝      ╚════██║████╔╝██║     │      ║
+║    │ ██║ ╚████║██║██║        ██║      ██║       ███████║╚██████╔╝     │      ║
+║    │ ╚═╝  ╚═══╝╚═╝╚═╝        ╚═╝      ╚═╝       ╚══════╝ ╚═════╝      │      ║
+║    │                                                                  │      ║
+║    │          A I   P O R T F O L I O   O P T I M I Z A T I O N       │      ║
+║    └──────────────────────────────────────────────────────────────────┘      ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
 
-### The Problem
-Traditional retail portfolio management and robo-advisors often rely on static asset allocations (e.g., standard 60/40 equity-debt rules) or naive historical return extrapolation. These approaches fail during macro regime shifts, suffer from severe single-stock concentration, and ignore forward-looking volatility clustering and structural correlation breakdown. Furthermore, machine learning models in finance are frequently treated as "black boxes," leaving investors without clear rationale behind rebalancing signals.
+</td></tr>
+</table>
 
-### The Solution
-This platform introduces an institutional-grade, multi-stage quantitative pipeline for the **Nifty 50 universe**:
-1. **Systematic Ingestion & Engineering**: Captures price, volume, and sentiment data across all 50 constituent equities, generating momentum, volatility, volume, and technical oscillator indicators.
-2. **Supervised Return Forecasting**: Employs gradient boosted trees (LightGBM) and ensemble regressors (Random Forest) to forecast 1-month forward returns with target outlier clipping.
-3. **Volatility & Correlation Modeling**: Fits GARCH(1,1) processes to capture conditional heteroskedasticity and computes Ledoit-Wolf shrinkage covariance matrices, filtered via NetworkX Minimum Spanning Trees (MST).
-4. **Macro Regime Awareness**: Applies a 3-state Gaussian Hidden Markov Model (HMM) to classify market conditions into **Bull**, **Normal**, and **Bear** regimes.
-5. **Dynamic Risk-Penalized Convex Optimization**: Solves a Markowitz mean-variance quadratic program via CVXPY with long-only constraints ($w_i \ge 0$), a 20% single-asset cap ($w_i \le 0.20$), and full investment ($\sum w_i = 1$). Risk aversion ($\lambda$) dynamically adapts based on macro regime probabilities and contextual bandit volatility penalties.
-6. **Transparent Explainability (XAI)**: Uses Tree SHAP to quantify the exact feature attributions driving return predictions for every stock.
+</div>
 
 ---
 
-## Key Features
+## 📑 Table of Contents
 
-### 1. Quantitative ML Pipeline & Optimization
-- **Return Predictor**: Trained on rolling multi-year cross-sectional technical features (RSI, MACD diff, Bollinger %B, ATR, CCI, 12-month momentum, 52-week high distance, volume ratios). Target returns are winsorized between the 1st and 99th percentiles to mitigate outlier distortion.
-- **GARCH(1,1) Volatility Forecasting**: Models conditional variance over rolling windows (~756 trading days / 3 years), capturing volatility clustering.
-- **Ledoit-Wolf Shrinkage Covariance**: Replaces sample covariance matrices with shrinkage estimators to prevent optimization instability and ill-conditioned matrix inversion.
-- **Network Minimum Spanning Tree (MST)**: Constructs asset correlation topologies to identify high-centrality equity clusters and prevent overexposure to correlated market sectors.
-- **3-State Gaussian HMM**: Unsupervised detection of market latent states (`Bull`, `Normal`, `Bear`) using index returns and realized volatility.
-- **Convex Portfolio Construction**: CVXPY optimization sweeps user risk tolerances ($0.0 \le \text{RT} \le 1.0$), pre-calculating frontier weights.
+<table>
+  <tr>
+    <td align="left" width="220"><b>🎯 CORE</b></td>
+    <td align="left" width="220"><b>🧠 INTELLIGENCE</b></td>
+    <td align="left" width="220"><b>🏗️ INFRASTRUCTURE</b></td>
+    <td align="left" width="220"><b>🔐 OPS</b></td>
+  </tr>
+  <tr>
+    <td align="left"><a href="#-overview">Overview</a></td>
+    <td align="left"><a href="#-quantitative-ml-pipeline--optimization">AI/ML Pipeline</a></td>
+    <td align="left"><a href="#-technology-stack">Technology Stack</a></td>
+    <td align="left"><a href="#-security-and-hardening-considerations">Security</a></td>
+  </tr>
+  <tr>
+    <td align="left"><a href="#-key-features">Key Features</a></td>
+    <td align="left"><a href="#-explainable-ai-xai">Explainable AI</a></td>
+    <td align="left"><a href="#-repository-structure">Repo Structure</a></td>
+    <td align="left"><a href="#-testing-and-code-quality">Testing</a></td>
+  </tr>
+  <tr>
+    <td align="left"><a href="#-visual-artifacts--model-explainability">Visual Artifacts</a></td>
+    <td align="left"><a href="#-architecture-overview">Architecture</a></td>
+    <td align="left"><a href="#-installation-and-setup">Setup</a></td>
+    <td align="left"><a href="#-roadmap">Roadmap</a></td>
+  </tr>
+  <tr>
+    <td align="left"><a href="#-api-documentation">API Docs</a></td>
+    <td align="left"><a href="#-database-and-data-management">Database</a></td>
+    <td align="left"><a href="#-deployment--containerization">Deployment</a></td>
+    <td align="left"><a href="#-troubleshooting--faq">FAQ</a></td>
+  </tr>
+  <tr>
+    <td align="left"></td>
+    <td align="left"></td>
+    <td align="left"></td>
+    <td align="left"><a href="#-known-limitations">Known Limitations</a></td>
+  </tr>
+  <tr>
+    <td align="left"></td>
+    <td align="left"></td>
+    <td align="left"></td>
+    <td align="left"><a href="#-contributing">Contributing</a></td>
+  </tr>
+</table>
 
-### 2. Explainable AI (XAI)
-- **SHAP TreeExplainer Attributions**: Calculates exact Shapley values for top signals (e.g., 6-month momentum rank, distance to 52-week high, volume ratio).
-- **Human-Readable "Why" Justifications**: Converts mathematical attributions into actionable text summaries displayed directly in the user interface.
+## 🎯 Overview
 
-### 3. Full-Stack User Interfaces
-- **Next.js 16 Web Dashboard (`frontend/`)**: Modern UI built with React 19, TypeScript, and TailwindCSS v4:
-  - **Executive Overview**: Real-time market regime pill banner, dynamic asset allocation donut charts, top predicted alpha picks, and SHAP insight cards.
-  - **Portfolio Health Analyzer**: Allows users to input existing holdings, displaying concentration alerts (e.g., single positions $> 20\%$), portfolio beta, expected forward return, and rebalancing recommendations.
-  - **Goal Planner & SIP Calculator**: Calculates compound growth trajectories and monthly SIP requirements to achieve financial targets.
-  - **Fund Screener**: AI-ranked mutual fund and ETF scoring.
-- **Streamlit Analytical Dashboard (`src/dashboard/`)**: Rapid quantitative inspection dashboard for exploratory data analysis, covariance inspection, and regime transitions.
+```diff
+- ❌ Traditional robo-advisors: static 60/40 splits, naive extrapolation
+- ❌ Fail during macro regime shifts, severe concentration, ignore volatility clustering
+- ❌ ML models treated as black boxes → no investor trust
 
-### 4. Enterprise API & Security
-- **FastAPI Backend**: Asynchronous REST API serving predictions, volatilities, regime probabilities, SHAP explanations, correlation graph JSON, and portfolio optimization endpoints.
-- **Authentication**: JWT authentication with OAuth2 password bearer tokens and bcrypt password hashing via PassLib.
-- **Pluggable Persistence**: Automatic SQLite database support for zero-config local development, with direct migration support for production PostgreSQL / TimescaleDB via SQLAlchemy.
++ ✅ Institutional-grade multi-stage quant pipeline for Nifty 50 universe
++ ✅ Forward-looking volatility + regime-aware dynamic optimization
++ ✅ Full SHAP-based explainability on every prediction
+```
+
+
+
+### 🧩 The Problem
+
+> Traditional retail portfolio management relies on **static asset allocations** or **naive historical return extrapolation**. These approaches fail during macro regime shifts, suffer from **severe single-stock concentration**, and ignore forward-looking **volatility clustering** and **structural correlation breakdown**. Furthermore, ML models in finance are frequently **black boxes** — leaving investors without rationale behind rebalancing signals.
+
+### 💡 The Solution
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+#### 🔬 Six-Stage Quant Pipeline
+
+```
+┌─────────────────────────────┐
+│ 1. INGESTION & ENGINEERING  │
+│    Nifty 50 OHLCV + sentiment│
+├─────────────────────────────┤
+│ 2. RETURN FORECASTING       │
+│    LightGBM + Random Forest │
+├─────────────────────────────┤
+│ 3. VOLATILITY MODELING      │
+│    GARCH(1,1) + Ledoit-Wolf │
+├─────────────────────────────┤
+│ 4. REGIME DETECTION         │
+│    3-State Gaussian HMM     │
+├─────────────────────────────┤
+│ 5. CONVEX OPTIMIZATION      │
+│    CVXPY Markowitz QP       │
+├─────────────────────────────┤
+│ 6. EXPLAINABILITY           │
+│    Tree SHAP attributions   │
+└─────────────────────────────┘
+```
+
+</td>
+<td width="50%" valign="top">
+
+#### 🎛️ Optimization Constraints
+
+| Constraint | Formulation |
+|:---|:---|
+| Long-only | $w_i \ge 0$ |
+| Single-asset cap | $w_i \le 0.20$ |
+| Full investment | $\sum w_i = 1$ |
+| Risk aversion | $\lambda = f(\text{regime}, \sigma)$ |
+
+**Objective:**
+
+$$\max_w \; w^T\mu - \lambda \cdot w^T\Sigma w$$
+
+Where $\lambda$ dynamically adapts to macro regime probabilities and contextual bandit volatility penalties.
+
+</td>
+</tr>
+</table>
 
 ---
 
-## Visual Artifacts & Model Explainability
+## ⚡ Key Features
 
-The pipeline exports visual diagnostic artifacts to inspect feature gain and weight distributions:
+<div align="center">
 
-| Enhanced Feature Importance | Feature Gain Distribution |
-| :---: | :---: |
-| ![Enhanced Feature Importance](feature_importance_enhanced.png) | ![Feature Gain](feature_importance_gain.png) |
+### 🧠 Quantitative ML Pipeline & Optimization
 
-| Raw Feature Importance | Feature Weight Distribution |
-| :---: | :---: |
-| ![Feature Importance](feature_importance.png) | ![Feature Weight](feature_importance_weight.png) |
+</div>
+
+<table>
+<tr>
+<td width="33%" valign="top" align="center">
+
+#### 📈 Return Predictor
+
+![LightGBM](https://img.shields.io/badge/LightGBM-4.0+-2C8EBB?style=flat-square)
+
+Gradient boosted trees trained on rolling cross-sectional technical features
+
+`RSI` `MACD` `%B` `ATR` `CCI` `Momentum` `52W High` `Volume`
+
+Target winsorized at **1st / 99th percentiles**
+
+</td>
+<td width="33%" valign="top" align="center">
+
+#### 🌊 GARCH Volatility
+
+![GARCH](https://img.shields.io/badge/GARCH-1%2C1-FF6B35?style=flat-square)
+
+Conditional variance over rolling **756-day** windows
+
+Captures **volatility clustering** across market regimes
+
+Paired with **Ledoit-Wolf shrinkage** covariance for numerical stability
+
+</td>
+<td width="33%" valign="top" align="center">
+
+#### 🕸️ Network MST
+
+![NetworkX](https://img.shields.io/badge/NetworkX-MST-8A2BE2?style=flat-square)
+
+Minimum Spanning Tree on asset correlations
+
+Identifies **high-centrality clusters**
+
+Prevents overexposure to correlated sectors
+
+</td>
+</tr>
+<tr>
+<td width="33%" valign="top" align="center">
+
+#### 🔮 HMM Regimes
+
+![HMM](https://img.shields.io/badge/HMM-3--State-00C853?style=flat-square)
+
+Gaussian Hidden Markov Model on index returns + realized vol
+
+Classifies: 🐂 **Bull** · ⚖️ **Normal** · 🐻 **Bear**
+
+Probabilities feed into dynamic risk aversion
+
+</td>
+<td width="33%" valign="top" align="center">
+
+#### 🎯 CVXPY Optimizer
+
+![CVXPY](https://img.shields.io/badge/CVXPY-1.3.1+-FF6B35?style=flat-square)
+
+Markowitz mean-variance QP sweep across risk tolerances `[0.0 → 1.0]`
+
+Pre-computes the full efficient frontier
+
+Convex, deterministic, production-safe
+
+</td>
+<td width="33%" valign="top" align="center">
+
+#### 🔍 SHAP XAI
+
+![SHAP](https://img.shields.io/badge/SHAP-0.42+-8A2BE2?style=flat-square)
+
+Exact Shapley values per feature per stock
+
+Converts math → **human-readable "why" justifications**
+
+Displayed natively in the dashboard
+
+</td>
+</tr>
+</table>
 
 ---
 
-## Architecture Overview
+<div align="center">
+
+### 🖥️ Full-Stack Interfaces
+
+</div>
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+#### 🌐 Next.js 16 Web Dashboard
+
+![Next.js](https://img.shields.io/badge/Next.js-16.1-000000?style=flat-square&logo=next.js)
+![React](https://img.shields.io/badge/React-19.2-61DAFB?style=flat-square&logo=react)
+![Tailwind](https://img.shields.io/badge/Tailwind-v4-06B6D4?style=flat-square&logo=tailwind-css)
+
+- 📊 **Executive Overview** — regime pill, allocation donuts, top alpha picks, SHAP cards
+- 🩺 **Portfolio Health Analyzer** — concentration alerts, beta, rebalancing recs
+- 🎯 **Goal Planner & SIP Calculator** — compound growth + monthly SIP solver
+- 🔎 **Fund Screener** — AI-ranked mutual funds & ETFs
+
+</td>
+<td width="50%" valign="top">
+
+#### 📓 Streamlit Analytical Workbench
+
+![Streamlit](https://img.shields.io/badge/Streamlit-1.25+-FF4B4B?style=flat-square&logo=streamlit)
+
+- 🔬 Exploratory data analysis
+- 📐 Covariance matrix inspection
+- 🌀 Regime transition visualizations
+- ⚡ Rapid quant prototyping interface
+
+*Runs parallel to the web dashboard on port `8501`*
+
+</td>
+</tr>
+</table>
+
+---
+
+<div align="center">
+
+### 🔐 Enterprise API & Security
+
+</div>
+
+| Layer | Implementation |
+|:---|:---|
+| ⚡ **Async Backend** | FastAPI + Uvicorn serving predictions, volatilities, regimes, SHAP, MST graphs |
+| 🔑 **Auth** | JWT (HS256) + OAuth2 password bearer + bcrypt hashing via PassLib |
+| 🗄️ **Persistence** | SQLite (zero-config dev) → PostgreSQL / TimescaleDB (production) via SQLAlchemy |
+
+---
+
+## 🎨 Visual Artifacts & Model Explainability
+
+<div align="center">
+
+<table>
+<tr>
+<td align="center" width="50%">
+
+### 📊 Enhanced Feature Importance
+
+![Enhanced Feature Importance](feature_importance_enhanced.png)
+
+</td>
+<td align="center" width="50%">
+
+### ⚖️ Feature Gain Distribution
+
+![Feature Gain](feature_importance_gain.png)
+
+</td>
+</tr>
+<tr>
+<td align="center" width="50%">
+
+### 🎯 Raw Feature Importance
+
+![Feature Importance](feature_importance.png)
+
+</td>
+<td align="center" width="50%">
+
+### 📐 Feature Weight Distribution
+
+![Feature Weight](feature_importance_weight.png)
+
+</td>
+</tr>
+</table>
+
+</div>
+
+---
+
+## 🏗️ Architecture Overview
+
+<div align="center">
 
 ```mermaid
 flowchart TD
@@ -131,202 +393,277 @@ flowchart TD
     end
 ```
 
-For the comprehensive high-level and low-level architecture breakdown, sequence diagrams, and mathematical formulation, see the [System Architecture & Interview Guide](docs/SYSTEM_ARCHITECTURE_AND_INTERVIEW_GUIDE.md).
+📖 **Deep-dive:** [System Architecture & Interview Guide](docs/SYSTEM_ARCHITECTURE_AND_INTERVIEW_GUIDE.md) — HLD, LLD, sequence diagrams & mathematical formulation
+
+</div>
 
 ---
 
-## Technology Stack
+## 🛠️ Technology Stack
 
-| Domain | Technology | Purpose & Verification |
-| :--- | :--- | :--- |
-| **Frontend Framework** | Next.js 16.1.6 (App Router) | Server and client rendering for the modern web dashboard (`frontend/package.json`) |
-| **UI Library** | React 19.2.4 | Component-driven UI architecture |
-| **Styling** | TailwindCSS 4.2.1 | Utility-first styling with modern PostCSS pipeline |
-| **Icons & Charts** | Lucide React, Recharts 3.7.0 | Financial charts, allocation donuts, and metrics visualizers |
-| **Analytical UI** | Streamlit 1.25+ | Quantitative workbench (`src/dashboard/main.py`) |
-| **Backend API** | FastAPI 0.100+, Uvicorn 0.23+ | Asynchronous REST API serving inference and optimization endpoints |
-| **Optimization** | CVXPY 1.3.1+ | Quadratic programming solver for constrained Markowitz mean-variance optimization |
-| **Machine Learning** | LightGBM 4.0+, Scikit-Learn 1.2+ | Cross-sectional return prediction models and feature transformers |
-| **Time Series & Volatility** | `arch` 6.0+, `hmmlearn` 0.3+ | GARCH(1,1) conditional volatility and 3-state Gaussian Hidden Markov Models |
-| **Explainable AI** | SHAP 0.42+ | TreeExplainer attribution scoring for multi-factor models |
-| **Data & Financial Math** | Pandas 2.0+, NumPy 1.24+, `ta` 0.10+ | DataFrames, matrix operations, and technical indicators |
-| **Market Data** | `yfinance` 0.2.18+ | Real-time and historical equity prices from Yahoo Finance |
-| **Database & ORM** | SQLAlchemy 2.0+, SQLite, PostgreSQL | Relational storage for user profiles, goals, and credentials |
-| **Authentication** | PassLib (bcrypt), Python-Jose | Password hashing and signed HS256 JWT tokens |
-| **Orchestration** | Apache Airflow DAG | Automated batch workflow specification (`dags/portfolio_pipeline.py`) |
-| **Testing** | Pytest 7.4+ | Automated unit tests for data preprocessing and financial metrics |
+<div align="center">
+
+| 🔷 Domain | ⚙️ Technology | 🎯 Purpose |
+|:---|:---|:---|
+| **Frontend** | `Next.js 16.1.6` (App Router) | SSR + CSR modern web dashboard |
+| **UI Library** | `React 19.2.4` | Component-driven architecture |
+| **Styling** | `TailwindCSS 4.2.1` | Utility-first + PostCSS pipeline |
+| **Icons & Charts** | `Lucide React`, `Recharts 3.7.0` | Financial charts, donuts, metrics |
+| **Analytical UI** | `Streamlit 1.25+` | Quant workbench |
+| **Backend API** | `FastAPI 0.100+`, `Uvicorn 0.23+` | Async REST API |
+| **Optimization** | `CVXPY 1.3.1+` | Markowitz QP solver |
+| **ML** | `LightGBM 4.0+`, `Scikit-Learn 1.2+` | Return prediction |
+| **Time Series** | `arch 6.0+`, `hmmlearn 0.3+` | GARCH + HMM |
+| **XAI** | `SHAP 0.42+` | TreeExplainer attributions |
+| **Data & Math** | `Pandas 2.0+`, `NumPy 1.24+`, `ta 0.10+` | DataFrames + technical indicators |
+| **Market Data** | `yfinance 0.2.18+` | Yahoo Finance ingestion |
+| **DB & ORM** | `SQLAlchemy 2.0+`, SQLite, PostgreSQL | Relational persistence |
+| **Auth** | `PassLib (bcrypt)`, `Python-Jose` | Hashing + HS256 JWT |
+| **Orchestration** | `Apache Airflow` | Batch workflow DAG |
+| **Testing** | `Pytest 7.4+` | Automated unit tests |
+
+</div>
 
 ---
 
-## Repository Structure
+## 📁 Repository Structure
 
 ```text
 portfolio-ml/
-├── config/
-│   ├── config.yaml                    # Master project configuration (tickers, hyperparameters, constraints)
+│
+├── 📂 config/
+│   ├── config.yaml                    # Master config (tickers, hyperparams, constraints)
 │   └── schema.sql                     # PostgreSQL / TimescaleDB production schema
-├── dags/
-│   └── portfolio_pipeline.py          # Apache Airflow DAG for scheduled weekday execution
-├── data/
-│   ├── portfolio.db                   # Local SQLite database (users, profiles, financial goals)
-│   ├── processed/                     # Artifacts generated by the quantitative pipeline
-│   │   ├── clean_prices.csv           # Cleaned historical prices
-│   │   ├── covariance.csv             # Ledoit-Wolf shrinkage covariance matrix
-│   │   ├── latest_explanations.csv    # Per-asset SHAP attribution values
-│   │   ├── latest_portfolio.csv       # Pre-computed optimal allocations across risk tolerances
+│
+├── 📂 dags/
+│   └── portfolio_pipeline.py          # Airflow DAG — scheduled weekday execution
+│
+├── 📂 data/
+│   ├── portfolio.db                   # SQLite (users, profiles, goals)
+│   ├── 📂 processed/                  # Quantitative pipeline outputs
+│   │   ├── clean_prices.csv
+│   │   ├── covariance.csv             # Ledoit-Wolf shrinkage matrix
+│   │   ├── latest_explanations.csv    # SHAP attributions
+│   │   ├── latest_portfolio.csv       # Optimal allocations
 │   │   ├── latest_predictions.csv     # 1-month return forecasts
-│   │   ├── latest_regime.csv          # HMM state probabilities (Bull, Normal, Bear)
-│   │   ├── latest_sentiment.csv       # Sentiment polarity scores
-│   │   └── volatility_forecasts.csv   # GARCH annualised volatility estimates
-│   └── raw/                           # Raw ingested market data cache
-├── docker/
-│   ├── docker-compose.yml             # Multi-service compose (TimescaleDB, API, Streamlit)
-│   ├── Dockerfile.api                 # Container recipe for FastAPI backend
-│   └── Dockerfile.dashboard           # Container recipe for Streamlit service
-├── docs/
-│   └── SYSTEM_ARCHITECTURE_AND_INTERVIEW_GUIDE.md  # Comprehensive HLD/LLD & interview defense
-├── frontend/                          # Next.js 16 Web Application
-│   ├── package.json                   # Frontend dependencies and npm scripts
-│   ├── src/
-│   │   └── app/
-│   │       ├── dashboard/             # Main dashboard, portfolio analyzer, goals, fund screener
-│   │       ├── login/                 # User registration and authentication pages
-│   │       ├── layout.tsx             # Root layout and metadata
-│   │       └── page.tsx               # Landing redirect page
-│   └── tailwind.config.ts / postcss   # TailwindCSS build configuration
-├── notebooks/                         # Exploratory research and model prototyping notebooks
-├── src/
-│   ├── api/                           # FastAPI Application
-│   │   ├── auth.py                    # JWT authentication router, bcrypt hashing, profile endpoints
-│   │   ├── database.py                # SQLAlchemy engine and ORM models (User, UserProfile)
-│   │   └── main.py                    # API entry point, CORS configuration, data endpoints
-│   ├── backtesting/                   # Backtesting harness and financial evaluation metrics
-│   │   ├── backtest.py                # Historical rebalancing simulator
-│   │   └── metrics.py                 # Sharpe, Sortino, Max Drawdown, Calmar calculations
-│   ├── dashboard/                     # Streamlit Application
-│   │   ├── main.py                    # Streamlit entry point
-│   │   └── pages/                     # Dedicated Streamlit analytic pages
-│   ├── data_pipeline/                 # Data Ingestion & Transformation
-│   │   ├── fetch_data.py              # Ingests Nifty 50 OHLCV data
-│   │   ├── preprocess.py              # Forward-filling, returns computation, corporate action alignment
-│   │   ├── feature_engineering.py     # Technical indicator generator (momentum, RSI, MACD, etc.)
-│   │   └── sentiment.py               # News sentiment scorer (NewsAPI + VADER)
-│   ├── models/                        # Quantitative Models
-│   │   ├── regime/                    # Gaussian HMM 3-state regime detection
-│   │   ├── return_predictor/          # LightGBM / Random Forest training, inference, and SHAP explainability
-│   │   └── volatility/                # GARCH(1,1), Ledoit-Wolf covariance, and Network MST
-│   └── optimizer/                     # Portfolio Optimization
-│       ├── fusion.py                  # Contextual bandit dynamic risk penalty calculator
-│       └── portfolio.py               # CVXPY Markowitz quadratic program solver
-├── tests/
-│   └── test_pipeline.py               # Pytest suite for data hygiene and financial metric formulas
-├── .env                               # Local environment configuration file (git-ignored)
-├── build_features_and_train.py        # Standalone script for feature creation and model training
-├── comparative_analysis.py            # Comparative evaluation script for ML models
-├── feature_importance_*.png           # Visual model feature importance diagnostic plots
-├── INTERVIEW_QA_REFERENCE.md          # 330 institutional interview questions & deep architectural answers
-├── PROJECT_ANALYSIS_AND_COMPLETE_399_QA.md # 399-question technical reference manual
-├── project_evaluation.md              # Model benchmarking and quantitative performance report
-├── project_explanation.md             # Executive project breakdown
-├── requirements.txt                   # Verified Python dependencies
-├── run_full_pipeline.bat              # Batch script to execute the 7-stage ML pipeline
-└── run_remaining.bat                  # Batch script to execute stages 2-7 (skips data download)
+│   │   ├── latest_regime.csv          # HMM state probabilities
+│   │   ├── latest_sentiment.csv       # Sentiment polarity
+│   │   └── volatility_forecasts.csv   # GARCH annualized vol
+│   └── 📂 raw/                        # Raw market data cache
+│
+├── 📂 docker/
+│   ├── docker-compose.yml             # TimescaleDB + API + Streamlit
+│   ├── Dockerfile.api
+│   └── Dockerfile.dashboard
+│
+├── 📂 docs/
+│   └── SYSTEM_ARCHITECTURE_AND_INTERVIEW_GUIDE.md
+│
+├── 📂 frontend/                       # ⚛️  Next.js 16 Web App
+│   ├── package.json
+│   └── src/app/
+│       ├── dashboard/                 # Main + portfolio + goals + screener
+│       ├── login/                     # Auth pages
+│       ├── layout.tsx
+│       └── page.tsx
+│
+├── 📂 notebooks/                      # Research & prototyping
+│
+├── 📂 src/
+│   ├── 📂 api/                        # ⚡  FastAPI Application
+│   │   ├── auth.py                    # JWT router, bcrypt, profiles
+│   │   ├── database.py                # SQLAlchemy engine + ORM
+│   │   └── main.py                    # Entry point, CORS, data endpoints
+│   │
+│   ├── 📂 backtesting/
+│   │   ├── backtest.py                # Rebalancing simulator
+│   │   └── metrics.py                 # Sharpe · Sortino · MaxDD · Calmar
+│   │
+│   ├── 📂 dashboard/                  # 📓  Streamlit
+│   │   ├── main.py
+│   │   └── pages/
+│   │
+│   ├── 📂 data_pipeline/
+│   │   ├── fetch_data.py              # Nifty 50 OHLCV ingestion
+│   │   ├── preprocess.py              # Ffill, returns, corp-action alignment
+│   │   ├── feature_engineering.py     # Momentum, RSI, MACD, etc.
+│   │   └── sentiment.py               # NewsAPI + VADER
+│   │
+│   ├── 📂 models/
+│   │   ├── regime/                    # 3-state Gaussian HMM
+│   │   ├── return_predictor/          # LightGBM / RF + SHAP
+│   │   └── volatility/                # GARCH + Ledoit-Wolf + MST
+│   │
+│   └── 📂 optimizer/
+│       ├── fusion.py                  # Contextual bandit risk penalty
+│       └── portfolio.py               # CVXPY Markowitz solver
+│
+├── 📂 tests/
+│   └── test_pipeline.py               # Pytest — data hygiene + metrics
+│
+├── 🔧 build_features_and_train.py
+├── 🔧 comparative_analysis.py
+├── 🖼️ feature_importance_*.png
+├── 📘 INTERVIEW_QA_REFERENCE.md       # 330 institutional questions
+├── 📘 PROJECT_ANALYSIS_AND_COMPLETE_399_QA.md
+├── 📘 project_evaluation.md
+├── 📘 project_explanation.md
+├── 📄 requirements.txt
+├── ⚙️ run_full_pipeline.bat            # 7-stage ML pipeline
+└── ⚙️ run_remaining.bat                # Stages 2–7 (skip download)
 ```
 
 ---
 
-## Prerequisites
+## ✅ Prerequisites
 
-- **Python**: Version `3.10` or higher (verified on Python `3.13`).
-- **Node.js**: Version `18.18+` or `20+` (verified with Next.js 16).
-- **Package Managers**: `pip` (Python) and `npm` (Node.js).
-- **Operating System**: Cross-platform (Windows PowerShell / CMD, macOS, Linux).
-- **Database (Optional for dev, recommended for prod)**: PostgreSQL 14+ / TimescaleDB (defaults to built-in SQLite).
+<div align="center">
+
+| Requirement | Version | Verified |
+|:---|:---|:---:|
+| 🐍 **Python** | `3.10+` | ✅ 3.13 |
+| 🟩 **Node.js** | `18.18+` or `20+` | ✅ Next.js 16 |
+| 📦 **Package Managers** | `pip` + `npm` | ✅ |
+| 💻 **OS** | Windows / macOS / Linux | ✅ Cross-platform |
+| 🗄️ **Database** *(optional dev)* | PostgreSQL 14+ / TimescaleDB | SQLite default |
+
+</div>
 
 ---
 
-## Installation and Setup
+## 🚀 Installation and Setup
 
-### 1. Clone the Repository
+### 1️⃣ Clone the Repository
+
 ```bash
 git clone https://github.com/yash-shende99/portfolio-ml.git
 cd portfolio-ml
 ```
 
-### 2. Set Up Python Environment
-Create and activate an isolated virtual environment:
+### 2️⃣ Set Up Python Environment
 
-**On Windows (PowerShell):**
+<table>
+<tr>
+<td width="50%">
+
+**🪟 Windows (PowerShell)**
+
 ```powershell
 python -m venv venv
 .\venv\Scripts\Activate.ps1
 ```
 
-**On Linux / macOS:**
+</td>
+<td width="50%">
+
+**🐧 Linux / macOS**
+
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-Install backend dependencies:
+</td>
+</tr>
+</table>
+
 ```bash
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### 3. Set Up Frontend Environment
-Navigate to the `frontend/` directory and install JavaScript dependencies:
+### 3️⃣ Set Up Frontend Environment
+
 ```bash
 cd frontend
 npm install
 cd ..
 ```
 
-### 4. Configure Environment Variables
-Create a `.env` file in the repository root (see [Environment Variables and Configuration](#environment-variables-and-configuration)).
+### 4️⃣ Configure Environment Variables
+
+Create `.env` in the repository root — see [Environment Variables](#-environment-variables-and-configuration).
 
 ---
 
-## Environment Variables and Configuration
+## 🔐 Environment Variables and Configuration
 
-The application reads configuration values through environment variables and `config/config.yaml`.
+### 📄 Environment Variables (`.env`)
 
-### Environment Variables (`.env`)
-
-| Variable | Description | Required? | Default / Safe Fallback | Example Value |
-| :--- | :--- | :--- | :--- | :--- |
+| 🔑 Variable | 📝 Description | Required | Default | Example |
+|:---|:---|:---:|:---|:---|
 | `DATABASE_URL` | SQLAlchemy connection string | Optional (Dev) | `sqlite:///./data/portfolio.db` | `postgresql://user:pass@localhost:5432/portfolio_db` |
-| `JWT_SECRET` | Secret key used for signing JWT tokens | **Mandatory in Prod** | `"super-secret-wealth-key-12345"` (Dev fallback) | `a3b89f214d5e67...` (64+ char random hex) |
-| `NEWSAPI_KEY` | API key for fetching market headlines | Optional | `None` (Sentiment module returns neutral 0.0) | `5317afd8e114...` |
-| `API_URL` | Base URL used by Streamlit / Docker | Optional | `http://localhost:8000` | `http://api:8000` |
+| `JWT_SECRET` | JWT signing key | ⚠️ **Prod** | `"super-secret-wealth-key-12345"` | 64+ char hex |
+| `NEWSAPI_KEY` | News headlines API | Optional | `None` (neutral 0.0) | `5317afd8e114...` |
+| `API_URL` | Base URL for Streamlit / Docker | Optional | `http://localhost:8000` | `http://api:8000` |
 
 > [!WARNING]
-> Never deploy to production with the default hardcoded `JWT_SECRET`. Always generate a cryptographically strong secret (`openssl rand -hex 32`) and supply it via the environment.
+> 🚨 **Never deploy with the default `JWT_SECRET`.** Generate a cryptographically strong secret:
+>
+> ```bash
+> openssl rand -hex 32
+> ```
 
-### Application Configuration (`config/config.yaml`)
-Key parameters configured in `config/config.yaml`:
-- **`data.tickers`**: List of 50 Nifty constituent symbols (`ADANIENT.NS`, `RELIANCE.NS`, `TCS.NS`, etc.) plus `^NSEI`.
-- **`model.return_predictor`**: LightGBM parameters (`n_estimators: 100`, `max_depth: 5`, `learning_rate: 0.05`, `split_year: 2023`).
-- **`model.volatility.garch_window`**: Rolling observation window (default `756` days).
-- **`model.regime.n_states`**: Number of hidden states (default `3`).
-- **`optimizer.max_weight`**: Single-asset concentration cap (default `0.20` or 20%).
-- **`optimizer.base_risk_aversion`**: Base risk penalty ($\lambda = 0.5$).
+### ⚙️ Application Configuration (`config/config.yaml`)
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+**📊 Data**
+
+- `data.tickers` — 50 Nifty symbols + `^NSEI`
+
+**🎯 Model**
+
+- `n_estimators: 100`
+- `max_depth: 5`
+- `learning_rate: 0.05`
+- `split_year: 2023`
+
+</td>
+<td width="50%" valign="top">
+
+**🌊 Volatility**
+
+- `garch_window: 756` days
+
+**🔮 Regime**
+
+- `n_states: 3`
+
+**📐 Optimizer**
+
+- `max_weight: 0.20`
+- `base_risk_aversion: 0.5`
+
+</td>
+</tr>
+</table>
 
 ---
 
-## Running the Application
+## 🏃 Running the Application
 
-### Option A: Complete Development Workflow (Recommended)
+### 🅰️ Complete Development Workflow *(Recommended)*
 
-#### Step 1: Execute the Quantitative Pipeline
-To generate fresh market predictions, covariance matrices, and optimal portfolios, run the 7-stage pipeline:
+#### 🔹 Step 1 — Execute the Quantitative Pipeline
 
-**On Windows:**
+<table>
+<tr>
+<td width="50%">
+
+**🪟 Windows**
+
 ```cmd
 run_full_pipeline.bat
 ```
 
-**On Linux / macOS (execute sequentially):**
+</td>
+<td width="50%">
+
+**🐧 Linux / macOS**
+
 ```bash
 python src/data_pipeline/fetch_data.py
 python src/data_pipeline/preprocess.py
@@ -336,103 +673,151 @@ python src/models/volatility/covariance.py
 python src/models/regime/hmm_predict.py
 python src/optimizer/portfolio.py
 ```
-*Note: If you have already ingested raw data and only wish to re-run modeling and optimization, run `run_remaining.bat`.*
 
-#### Step 2: Start the FastAPI Backend
-From the repository root (with virtual environment active):
+</td>
+</tr>
+</table>
+
+> 💡 *Already have raw data? Run `run_remaining.bat` to skip ingestion.*
+
+#### 🔹 Step 2 — Start the FastAPI Backend
+
 ```bash
 uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload
 ```
-The REST API will be available at:
-- **API Root**: `http://localhost:8000`
-- **Interactive Swagger Docs**: `http://localhost:8000/docs`
-- **OpenAPI JSON Schema**: `http://localhost:8000/openapi.json`
 
-#### Step 3: Start the Next.js Frontend Dashboard
-Open a second terminal:
+| 🌐 Endpoint | 🔗 URL |
+|:---|:---|
+| API Root | `http://localhost:8000` |
+| Swagger Docs | `http://localhost:8000/docs` |
+| OpenAPI Schema | `http://localhost:8000/openapi.json` |
+
+#### 🔹 Step 3 — Start the Next.js Frontend
+
 ```bash
 cd frontend
 npm run dev
 ```
-The web dashboard will be available at:
-- **Web App**: `http://localhost:3000` (Redirects to `/dashboard` or `/login`)
 
-#### Step 4 (Optional): Start the Analytical Streamlit Dashboard
-Open a third terminal:
+🌐 **Web App:** `http://localhost:3000` *(redirects to `/dashboard` or `/login`)*
+
+#### 🔹 Step 4 — *(Optional)* Streamlit Dashboard
+
 ```bash
 streamlit run src/dashboard/main.py --server.port 8501
 ```
-Available at: `http://localhost:8501`
+
+🌐 **Available at:** `http://localhost:8501`
 
 ---
 
-## How to Use the Application
+## 🎮 How to Use the Application
 
-### End-to-End User Journey
+<div align="center">
 
-1. **User Authentication & Profile Setup**:
-   - Navigate to `http://localhost:3000/login`.
-   - Register a new username and password. An empty profile is provisioned automatically with default risk parameters.
-   - Upon sign-in, an encrypted JWT token is issued and stored in browser session storage.
+### 🛤️ End-to-End User Journey
 
-2. **Market Regime & Macro Assessment**:
-   - The top banner on `/dashboard` displays the current market regime detected by the HMM (`Bull`, `Normal`, or `Bear`).
-   - If the system detects a Bear regime probability $> 0.60$, the dynamic contextual bandit increases risk penalty ($\lambda$), shifting recommended portfolio weights toward defensive assets.
+```mermaid
+journey
+    title Investor Workflow
+    section Authenticate
+      Register / Login: 5: User
+      JWT Issued: 5: System
+    section Assess
+      View Regime Banner: 4: User
+      Check Risk Penalty: 3: System
+    section Explore
+      Target Allocations: 5: User
+      SHAP Rationale: 5: User
+    section Analyze
+      Enter Holdings: 4: User
+      Health Score: 5: System
+      Rebalance Recs: 5: System
+    section Plan
+      Set Goal: 4: User
+      SIP Calculator: 5: User
+```
 
-3. **Exploring Target Allocations & SHAP Rationale**:
-   - The **Asset Allocation** card displays the CVXPY optimal weights matching the user's risk tolerance slider ($0.0$ to $1.0$).
-   - The **Return Predictions** table highlights the top Nifty 50 picks by forecasted 1-month return.
-   - The **Explainable AI (XAI)** panel presents SHAP attributions, explaining why specific equities (e.g., strong 6-month momentum vs low volatility) were selected.
+</div>
 
-4. **Analyzing an Existing Portfolio**:
-   - Navigate to `/dashboard/portfolio`.
-   - Enter your current holdings (ticker symbol, quantity, buy price).
-   - The system evaluates your portfolio against latest model forecasts and generates:
-     - **Portfolio Health Score** ($0 - 100$).
-     - **Beta and Expected Return**.
-     - **Concentration Risk Alerts** (e.g., flags any stock exceeding 20% allocation).
-     - **AI Rebalancing Recommendations** (e.g., trimming assets with negative expected return).
+<table>
+<tr>
+<td width="50%">
 
-5. **Financial Goal Planning (SIP Calculator)**:
-   - Navigate to `/dashboard/goals`.
-   - Define a financial target (e.g., Retirement: ₹2,00,00,000 in 20 years).
-   - The tool calculates the required monthly SIP investment using annuity math based on expected portfolio return.
+#### 1️⃣ 🔑 Authentication & Profile
+
+Navigate to `/login`, register → empty profile auto-provisioned → JWT stored in session.
+
+#### 2️⃣ 🌡️ Market Regime Assessment
+
+Top banner shows HMM regime: 🐂 Bull · ⚖️ Normal · 🐻 Bear.
+If **Bear prob > 0.60**, risk penalty λ increases → defensive tilt.
+
+#### 3️⃣ 🎯 Target Allocations & SHAP
+
+- **Asset Allocation** card — CVXPY optimal weights vs risk slider `[0.0 → 1.0]`
+- **Return Predictions** — top Nifty 50 alpha picks
+- **XAI Panel** — SHAP attributions explain *why*
+
+</td>
+<td width="50%" valign="top">
+
+#### 4️⃣ 🩺 Analyze Existing Portfolio
+
+Go to `/dashboard/portfolio`, enter holdings → outputs:
+
+- **Health Score** (0–100)
+- **Beta + Expected Return**
+- **Concentration Alerts** (>20% flags)
+- **AI Rebalancing Recs** (trim negative-EV positions)
+
+#### 5️⃣ 🎯 SIP Goal Planner
+
+Go to `/dashboard/goals`, define target → annuity math computes required monthly SIP.
+
+</td>
+</tr>
+</table>
 
 ---
 
-## API Documentation
+## 📡 API Documentation
 
-All API endpoints are documented interactively at `http://localhost:8000/docs`. Below is a reference of key endpoints:
+<div align="center">
 
-### Authentication Endpoints
+📖 **Interactive docs:** `http://localhost:8000/docs`
 
-| Method | Endpoint | Description | Auth Required? | Request Payload | Response |
-| :--- | :--- | :--- | :---: | :--- | :--- |
-| `POST` | `/auth/register` | Register a new user account | No | JSON: `{"username": "...", "password": "..."}` | `{"access_token": "...", "token_type": "bearer"}` |
-| `POST` | `/auth/token` | Authenticate and obtain JWT token | No | Form Data: `username`, `password` | `{"access_token": "...", "token_type": "bearer"}` |
-| `GET` | `/auth/profile` | Retrieve authenticated user profile | Bearer Token | None | Profile object (age, income, goals, risk tolerance) |
-| `POST` | `/auth/profile` | Update profile settings | Bearer Token | JSON: `ProfileUpdate` object | `{"status": "success"}` |
+</div>
 
-### Quantitative & Market Data Endpoints
+### 🔐 Authentication Endpoints
 
-| Method | Endpoint | Description | Auth Required? | Parameters / Body | Response |
-| :--- | :--- | :--- | :---: | :--- | :--- |
-| `GET` | `/predict` | Latest 1-month return forecasts for all tickers | No | None | List of objects: `ticker`, `predicted_return`, `date` |
-| `GET` | `/volatility` | Latest GARCH annualised volatility forecasts | No | None | List of objects: `ticker`, `volatility_forecast` |
-| `GET` | `/regime` | Current HMM regime probabilities | No | None | `{"date": "...", "bear_prob": 0.1, "normal_prob": 0.3, "bull_prob": 0.6}` |
-| `GET` | `/sentiment` | News sentiment polarity scores | No | None | List of sentiment records by ticker |
-| `GET` | `/explain` | SHAP feature attribution values | No | None | List of feature contributions per ticker |
-| `GET` | `/graph` | Asset Minimum Spanning Tree (MST) graph | No | None | JSON node/edge structure |
-| `POST` | `/portfolio` | Optimal asset allocation weights for risk tolerance | No | `{"risk_tolerance": 0.5}` | `{"date": "...", "allocations": {"TCS.NS": 0.15, ...}}` |
-| `POST` | `/portfolio_analysis` | Evaluates user holdings for risk & concentration | No | `{"holdings": {"INFY.NS": {"quantity": 10, "buy_price": 1400}}}` | Health score, beta, concentration warning, recommendations |
-| `GET` | `/funds` | AI-ranked mutual funds and ETFs | No | None | Ranked fund list with Sharpe and Alpha metrics |
-| `POST` | `/goals` | Calculates required monthly SIP for a wealth goal | No | `{"target_amount": 10000000, "years": 15, "expected_return": 0.12}` | Monthly SIP, total investment, wealth gain |
+| Method | Endpoint | Description | Auth | Payload | Response |
+|:---:|:---|:---|:---:|:---|:---|
+| `POST` | `/auth/register` | Register new user | ❌ | `{"username","password"}` | `{"access_token","token_type"}` |
+| `POST` | `/auth/token` | Obtain JWT | ❌ | Form: `username`, `password` | `{"access_token","token_type"}` |
+| `GET` | `/auth/profile` | Get profile | ✅ | — | Profile object |
+| `POST` | `/auth/profile` | Update profile | ✅ | `ProfileUpdate` | `{"status":"success"}` |
+
+### 📊 Quantitative & Market Data Endpoints
+
+| Method | Endpoint | Description | Auth | Params / Body |
+|:---:|:---|:---|:---:|:---|
+| `GET` | `/predict` | 1-month return forecasts | ❌ | — |
+| `GET` | `/volatility` | GARCH annualized vol | ❌ | — |
+| `GET` | `/regime` | HMM regime probabilities | ❌ | — |
+| `GET` | `/sentiment` | News sentiment polarity | ❌ | — |
+| `GET` | `/explain` | SHAP feature attributions | ❌ | — |
+| `GET` | `/graph` | Asset MST graph | ❌ | — |
+| `POST` | `/portfolio` | Optimal weights for risk tolerance | ❌ | `{"risk_tolerance": 0.5}` |
+| `POST` | `/portfolio_analysis` | Evaluate holdings | ❌ | `{"holdings": {...}}` |
+| `GET` | `/funds` | AI-ranked funds & ETFs | ❌ | — |
+| `POST` | `/goals` | SIP calculator | ❌ | `{"target_amount","years","expected_return"}` |
 
 ---
 
-## Database and Data Management
+## 🗄️ Database and Data Management
 
-The application uses SQLAlchemy with dual-mode persistence:
+<div align="center">
 
 ```mermaid
 erDiagram
@@ -453,22 +838,47 @@ erDiagram
     }
 ```
 
-### Persistence Modes
-1. **Development (Default)**: SQLite database stored at `data/portfolio.db`. Zero setup required; tables are automatically created on backend startup via `Base.metadata.create_all(bind=engine)`.
-2. **Production**: PostgreSQL or TimescaleDB configured via the `DATABASE_URL` environment variable. A complete relational schema definition with hypertable setup is provided in [config/schema.sql](config/schema.sql).
+</div>
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+#### 🧪 Development (Default)
+
+- **SQLite** at `data/portfolio.db`
+- ✅ Zero setup
+- ✅ Tables auto-created on startup
+- `Base.metadata.create_all(bind=engine)`
+
+</td>
+<td width="50%" valign="top">
+
+#### 🚀 Production
+
+- **PostgreSQL / TimescaleDB**
+- Configured via `DATABASE_URL`
+- Full schema in [`config/schema.sql`](config/schema.sql)
+- Hypertable setup included
+
+</td>
+</tr>
+</table>
 
 ---
 
-## Testing and Code Quality
+## 🧪 Testing and Code Quality
 
-### Running Unit Tests
-The test suite validates data preprocessing functions (such as forward-filling and return calculations) and financial metrics (such as Sharpe ratio, annualized volatility, and maximum drawdown calculations):
+### 🐍 Backend Unit Tests
 
 ```bash
 python -m pytest tests/
 ```
 
-**Verified Output:**
+<div align="center">
+
+**Verified Output**
+
 ```text
 ============================= test session starts =============================
 platform win32 -- Python 3.13.x, pytest-9.x, pluggy-1.x
@@ -480,8 +890,12 @@ tests\test_pipeline.py ..                                                [100%]
 ============================== 2 passed in 5.75s ==============================
 ```
 
-### Frontend Linting
-To check code quality and TypeScript types in the Next.js application:
+</div>
+
+Validates: forward-filling · return calcs · **Sharpe** · **annualized vol** · **max drawdown**
+
+### 🟩 Frontend Linting
+
 ```bash
 cd frontend
 npm run lint
@@ -489,9 +903,13 @@ npm run lint
 
 ---
 
-## Deployment & Containerization
+## 🐳 Deployment & Containerization
 
-A complete multi-container setup is defined in [docker/docker-compose.yml](docker/docker-compose.yml):
+<div align="center">
+
+Complete multi-container setup in [`docker/docker-compose.yml`](docker/docker-compose.yml)
+
+</div>
 
 ```yaml
 version: '3.8'
@@ -535,126 +953,189 @@ volumes:
   pgdata:
 ```
 
-### Starting Containers
+### 🚀 Starting Containers
+
 ```bash
 cd docker
 docker-compose up --build
 ```
 
 > [!NOTE]
-> `docker/Dockerfile.dashboard` currently references `src/dashboard/app.py`. If building the Streamlit container, ensure the command targets `src/dashboard/main.py`.
+> `docker/Dockerfile.dashboard` currently references `src/dashboard/app.py`. When building the Streamlit container, ensure the command targets `src/dashboard/main.py`.
 
 ---
 
-## Security and Hardening Considerations
+## 🔒 Security and Hardening Considerations
 
-1. **Authentication Secret**:
-   - The JWT signing key in `src/api/auth.py` defaults to `"super-secret-wealth-key-12345"` if `JWT_SECRET` is unset. For staging and production, you must set `JWT_SECRET` as an environment variable to prevent unauthorized token forgery.
-2. **Password Security**:
-   - Passwords are salted and hashed using **bcrypt** via PassLib before database storage. Plaintext passwords are never logged or stored.
-3. **CORS Restrictions**:
-   - In `src/api/main.py`, allowed CORS origins are configured for local development (`http://localhost:3000`, `http://127.0.0.1:3000`). When deploying the frontend to a production domain, configure allowed origins via environment variables.
-4. **Third-Party API Secrets**:
-   - `NEWSAPI_KEY` is loaded strictly from environment variables or `.env` and must not be checked into public version control.
+<div align="center">
+
+| # | 🛡️ Area | ✅ Action |
+|:---:|:---|:---|
+| 1 | **JWT Secret** | ⚠️ Defaults to `"super-secret-wealth-key-12345"` — **override in prod** |
+| 2 | **Password Storage** | bcrypt salted hash via PassLib — plaintext never logged |
+| 3 | **CORS** | Restricted to `localhost:3000` dev — configure env-driven origins for prod |
+| 4 | **API Keys** | `NEWSAPI_KEY` loaded from `.env` — never commit to VCS |
+
+</div>
 
 ---
 
-## Troubleshooting & FAQ
+## 🔧 Troubleshooting & FAQ
 
-### 1. `ModuleNotFoundError: No module named 'src'`
-**Cause**: The current working directory is not in your Python module search path.  
-**Resolution**: Run scripts from the repository root:
-```bash
-python -m src.api.main
-```
-Or set the `PYTHONPATH` environment variable:
+<details>
+<summary><b>❌ <code>ModuleNotFoundError: No module named 'src'</code></b></summary>
+
+**Cause:** CWD not in Python module search path.
+
+**Fix:** Run from repo root, or set `PYTHONPATH`:
+
 ```powershell
-# Windows PowerShell
-$env:PYTHONPATH="."
-# Linux / macOS
-export PYTHONPATH="."
+$env:PYTHONPATH="."           # Windows
+export PYTHONPATH="."         # Linux / macOS
 ```
 
-### 2. `HTTPException 404: Predictions not found. Run pipeline first.`
-**Cause**: The FastAPI application reads precomputed artifacts from `data/processed/latest_*.csv`. If these files do not exist, the endpoints will return a 404 error.  
-**Resolution**: Execute `run_full_pipeline.bat` (Windows) or run `python src/optimizer/portfolio.py` to generate the required artifacts.
+</details>
 
-### 3. Frontend Cannot Connect to Backend
-**Cause**: Next.js client pages fetch data from `http://localhost:8000`. If FastAPI is running on a different port or machine, calls will fail.  
-**Resolution**: Ensure `uvicorn src.api.main:app --port 8000` is running and accessible on localhost.
+<details>
+<summary><b>❌ <code>HTTPException 404: Predictions not found. Run pipeline first.</code></b></summary>
 
-### 4. `pytest: The term 'pytest' is not recognized`
-**Cause**: The virtual environment is either inactive or `pytest` was installed only inside the virtual environment without being on the global system PATH.  
-**Resolution**: Run pytest through your Python executable:
+**Cause:** FastAPI reads precomputed artifacts from `data/processed/latest_*.csv` — missing files → 404.
+
+**Fix:** Run `run_full_pipeline.bat` or `python src/optimizer/portfolio.py` to generate artifacts.
+
+</details>
+
+<details>
+<summary><b>❌ Frontend cannot connect to backend</b></summary>
+
+**Cause:** Next.js client fetches from `http://localhost:8000` — if FastAPI is elsewhere, calls fail.
+
+**Fix:** Ensure `uvicorn src.api.main:app --port 8000` is running and accessible.
+
+</details>
+
+<details>
+<summary><b>❌ <code>pytest: The term 'pytest' is not recognized</code></b></summary>
+
+**Cause:** Virtualenv inactive or pytest not on PATH.
+
+**Fix:**
+
 ```bash
 python -m pytest tests/
 ```
 
----
-
-## Known Limitations
-
-- **Daily / Monthly Granularity**: The quantitative models operate on daily closing prices and monthly rebalancing periods. High-frequency tick data or intraday order flow execution is not supported.
-- **Long-Only Markowitz**: The current optimizer solves long-only formulations ($w_i \ge 0$). Short-selling, leverage, and derivatives hedging strategies are not currently enabled in the objective function.
-- **Static Artifact Caching**: The FastAPI backend currently reads static CSV files generated by batch runs rather than running on-demand CVXPY solves per user request.
+</details>
 
 ---
 
-## Roadmap
+## ⚠️ Known Limitations
 
-- [ ] **Dynamic Live Solver**: Add an endpoint for on-the-fly custom CVXPY solves supporting user-specified ticker whitelists and sector constraints.
-- [ ] **Alpaca / Zerodha Broker Integration**: Direct execution API integration for automated paper trading and rebalancing.
-- [ ] **Multi-Asset Allocation**: Extend coverage beyond Nifty 50 equities to Indian Government Bonds, Sovereign Gold Bonds (SGBs), and liquid funds.
-- [ ] **Factor Attribution Backtester**: Full historical performance attribution against Nifty 50 benchmark using Fama-French 3-factor models.
+<div align="center">
 
----
+| 🚧 Limitation | 📝 Details |
+|:---|:---|
+| **Daily / Monthly Granularity** | Operates on daily closes + monthly rebalances — no intraday tick / order flow |
+| **Long-Only Markowitz** | $w_i \ge 0$ only — no short-selling, leverage, or derivatives hedging |
+| **Static Artifact Caching** | Reads precomputed CSVs — not on-demand CVXPY solves per request |
 
-## Contributing
-
-Contributions, bug reports, and suggestions are welcome.
-
-1. **Fork the Repository**:
-   Click the "Fork" button at the top right of GitHub.
-2. **Create a Feature Branch**:
-   ```bash
-   git checkout -b feature/dynamic-sector-constraints
-   ```
-3. **Commit Your Changes**:
-   Follow conventional commits format (`feat:`, `fix:`, `docs:`, `chore:`):
-   ```bash
-   git commit -m "feat(optimizer): add maximum sector exposure constraint"
-   ```
-4. **Run Verification**:
-   ```bash
-   python -m pytest tests/
-   cd frontend && npm run lint
-   ```
-5. **Open a Pull Request**:
-   Submit your pull request against the `main` branch with a clear description of the modifications.
+</div>
 
 ---
 
-## Licence
+## 🗺️ Roadmap
 
-No root open-source licence has been explicitly specified for this repository. The `frontend/package.json` file declares an `"ISC"` licence for frontend components. All other rights remain reserved by the repository owner unless otherwise noted.
+<div align="center">
+
+| Status | Feature |
+|:---:|:---|
+| ⬜ | **Dynamic Live Solver** — on-the-fly CVXPY with user ticker whitelists + sector constraints |
+| ⬜ | **Alpaca / Zerodha Integration** — automated paper trading & rebalancing |
+| ⬜ | **Multi-Asset Allocation** — G-Secs, SGBs, liquid funds beyond Nifty 50 |
+| ⬜ | **Factor Attribution Backtester** — Fama-French 3-factor vs Nifty benchmark |
+
+</div>
 
 ---
 
-## Acknowledgements & References
+## 🤝 Contributing
 
-- **National Stock Exchange of India (NSE)**: Benchmark index and constituent data.
-- **CVXPY**: Diamond, S., & Boyd, S. (2016). *CVXPY: A Python-embedded modeling language for convex optimization*.
-- **SHAP (SHapley Additive exPlanations)**: Lundberg, S. M., & Lee, S.-I. (2017). *A Unified Approach to Interpreting Model Predictions*.
-- **hmmlearn**: Hidden Markov Models in Python.
-- **arch**: Autoregressive Conditional Heteroskedasticity (ARCH/GARCH) models in Python.
+<div align="center">
+
+```text
+1️⃣  Fork  →  2️⃣  Branch  →  3️⃣  Commit  →  4️⃣  Verify  →  5️⃣  PR
+```
+
+</div>
+
+```bash
+# 1. Fork on GitHub
+
+# 2. Create feature branch
+git checkout -b feature/dynamic-sector-constraints
+
+# 3. Commit (conventional commits)
+git commit -m "feat(optimizer): add maximum sector exposure constraint"
+
+# 4. Run verification
+python -m pytest tests/
+cd frontend && npm run lint
+
+# 5. Open Pull Request against main
+```
 
 ---
 
-## Project Links & In-Depth Documentation
+## 📜 Licence
 
-- **Repository**: [https://github.com/yash-shende99/portfolio-ml](https://github.com/yash-shende99/portfolio-ml)
-- **Detailed System Architecture & Interview Guide**: [docs/SYSTEM_ARCHITECTURE_AND_INTERVIEW_GUIDE.md](docs/SYSTEM_ARCHITECTURE_AND_INTERVIEW_GUIDE.md)
-- **Complete Institutional Interview Q&A (330 Questions)**: [INTERVIEW_QA_REFERENCE.md](INTERVIEW_QA_REFERENCE.md)
-- **Master Technical & Quantitative Q&A (399 Questions)**: [PROJECT_ANALYSIS_AND_COMPLETE_399_QA.md](PROJECT_ANALYSIS_AND_COMPLETE_399_QA.md)
-- **Model Evaluation & Quantitative Benchmarks**: [project_evaluation.md](project_evaluation.md)
-- **Executive Project Overview**: [project_explanation.md](project_explanation.md)
+> No root open-source licence has been explicitly specified for this repository. The `frontend/package.json` declares an `"ISC"` licence for frontend components. All other rights remain reserved by the repository owner unless otherwise noted.
+
+---
+
+## 🙏 Acknowledgements & References
+
+<div align="center">
+
+| Resource | Citation |
+|:---|:---|
+| 🇮🇳 **NSE India** | Benchmark index & constituent data |
+| 🎯 **CVXPY** | Diamond, S., & Boyd, S. (2016). *CVXPY: A Python-embedded modeling language for convex optimization* |
+| 🔍 **SHAP** | Lundberg, S. M., & Lee, S.-I. (2017). *A Unified Approach to Interpreting Model Predictions* |
+| 🔮 **hmmlearn** | Hidden Markov Models in Python |
+| 🌊 **arch** | Autoregressive Conditional Heteroskedasticity (ARCH/GARCH) models in Python |
+
+</div>
+
+---
+
+## 🔗 Project Links & In-Depth Documentation
+
+<div align="center">
+
+| 📚 Document | 🔗 Link |
+|:---|:---|
+| 🌐 **Repository** | [github.com/yash-shende99/portfolio-ml](https://github.com/yash-shende99/portfolio-ml) |
+| 🏗️ **System Architecture & Interview Guide** | [`docs/SYSTEM_ARCHITECTURE_AND_INTERVIEW_GUIDE.md`](docs/SYSTEM_ARCHITECTURE_AND_INTERVIEW_GUIDE.md) |
+| 🎯 **Institutional Q&A (330 questions)** | [`INTERVIEW_QA_REFERENCE.md`](INTERVIEW_QA_REFERENCE.md) |
+| 🧠 **Master Technical Q&A (399 questions)** | [`PROJECT_ANALYSIS_AND_COMPLETE_399_QA.md`](PROJECT_ANALYSIS_AND_COMPLETE_399_QA.md) |
+| 📊 **Model Evaluation & Benchmarks** | [`project_evaluation.md`](project_evaluation.md) |
+| 📖 **Executive Overview** | [`project_explanation.md`](project_explanation.md) |
+
+</div>
+
+---
+
+<div align="center">
+
+### ⭐ If this project helped you, consider giving it a star!
+
+```
+────────────────────────────────────────────────────────────────
+   Built with 🧠 for quantitative finance · Powered by ⚡ FastAPI
+────────────────────────────────────────────────────────────────
+```
+
+![Made with Love](https://img.shields.io/badge/Made%20with-%E2%9D%A4%EF%B8%8F-red?style=for-the-badge)
+![India](https://img.shields.io/badge/Made%20in-India%20%F0%9F%87%AE%F0%9F%87%B3-FF9933?style=for-the-badge)
+
+</div>

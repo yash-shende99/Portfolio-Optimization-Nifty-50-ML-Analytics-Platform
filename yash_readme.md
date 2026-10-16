@@ -45,41 +45,50 @@
 
 ## 📑 Table of Contents
 
-<div align="center">
-
-<sub>
-
-**🎯 CORE** &nbsp;·&nbsp;
-[Overview](#-overview) ·
-[Features](#-key-features) ·
-[Artifacts](#-visual-artifacts--model-explainability) ·
-[API](#-api-documentation)
-
-**🧠 INTELLIGENCE** &nbsp;·&nbsp;
-[AI/ML](#-quantitative-ml-pipeline--optimization) ·
-[XAI](#-explainable-ai-xai) ·
-[Architecture](#-architecture-overview) ·
-[Database](#-database-and-data-management)
-
-**🏗️ INFRASTRUCTURE** &nbsp;·&nbsp;
-[Stack](#-technology-stack) ·
-[Structure](#-repository-structure) ·
-[Setup](#-installation-and-setup) ·
-[Deploy](#-deployment--containerization)
-
-**🔐 OPS &nbsp;·&nbsp; REFERENCE** &nbsp;·&nbsp;
-[Security](#-security-and-hardening-considerations) ·
-[Testing](#-testing-and-code-quality) ·
-[Roadmap](#-roadmap) ·
-[FAQ](#-troubleshooting--faq) ·
-[Limitations](#-known-limitations) ·
-[Contributing](#-contributing)
-
-</sub>
-
-</div>
----
-
+<table>
+  <tr>
+    <td align="left" width="220"><b>🎯 CORE</b></td>
+    <td align="left" width="220"><b>🧠 INTELLIGENCE</b></td>
+    <td align="left" width="220"><b>🏗️ INFRASTRUCTURE</b></td>
+    <td align="left" width="220"><b>🔐 OPS</b></td>
+  </tr>
+  <tr>
+    <td align="left"><a href="#-overview">Overview</a></td>
+    <td align="left"><a href="#-quantitative-ml-pipeline--optimization">AI/ML Pipeline</a></td>
+    <td align="left"><a href="#-technology-stack">Technology Stack</a></td>
+    <td align="left"><a href="#-security-and-hardening-considerations">Security</a></td>
+  </tr>
+  <tr>
+    <td align="left"><a href="#-key-features">Key Features</a></td>
+    <td align="left"><a href="#-explainable-ai-xai">Explainable AI</a></td>
+    <td align="left"><a href="#-repository-structure">Repo Structure</a></td>
+    <td align="left"><a href="#-testing-and-code-quality">Testing</a></td>
+  </tr>
+  <tr>
+    <td align="left"><a href="#-visual-artifacts--model-explainability">Visual Artifacts</a></td>
+    <td align="left"><a href="#-architecture-overview">Architecture</a></td>
+    <td align="left"><a href="#-installation-and-setup">Setup</a></td>
+    <td align="left"><a href="#-roadmap">Roadmap</a></td>
+  </tr>
+  <tr>
+    <td align="left"><a href="#-api-documentation">API Docs</a></td>
+    <td align="left"><a href="#-database-and-data-management">Database</a></td>
+    <td align="left"><a href="#-deployment--containerization">Deployment</a></td>
+    <td align="left"><a href="#-troubleshooting--faq">FAQ</a></td>
+  </tr>
+  <tr>
+    <td align="left"></td>
+    <td align="left"></td>
+    <td align="left"></td>
+    <td align="left"><a href="#-known-limitations">Known Limitations</a></td>
+  </tr>
+  <tr>
+    <td align="left"></td>
+    <td align="left"></td>
+    <td align="left"></td>
+    <td align="left"><a href="#-contributing">Contributing</a></td>
+  </tr>
+</table>
 ## 🎯 Overview
 
 <div align="center">

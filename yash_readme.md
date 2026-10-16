@@ -91,7 +91,7 @@
 </table>
 ## 🎯 Overview
 
-<div align="center">
+
 
 ```diff
 - ❌ Traditional robo-advisors: static 60/40 splits, naive extrapolation
@@ -103,7 +103,7 @@
 + ✅ Full SHAP-based explainability on every prediction
 ```
 
-</div>
+
 
 ### 🧩 The Problem
 

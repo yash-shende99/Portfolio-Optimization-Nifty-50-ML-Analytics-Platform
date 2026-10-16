@@ -26,12 +26,12 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                                                                              ║
 ║     ┌─────────────────────────────────────────────────────────────────┐      ║
-║     │  ██╗  ██╗██╗███████╗████████╗██╗   ██╗    ███████╗ ██████╗      │      ║
-║     │  ██║  ██║██║██╔════╝╚══██╔══╝╚██╗ ██╔╝    ██╔════╝██╔═████╗     │      ║
-║     │  ███████║██║█████╗     ██║    ╚████╔╝     ███████╗██║██╔██║     │      ║
-║     │  ██╔══██║██║██╔══╝     ██║     ╚██╔╝      ╚════██║████╔╝██║     │      ║
-║     │  ██║  ██║██║██║        ██║      ██║       ███████║╚██████╔╝     │      ║
-║     │  ╚═╝  ╚═╝╚═╝╚═╝        ╚═╝      ╚═╝       ╚══════╝ ╚═════╝      │      ║
+║     │ ███╗   ██╗██╗███████╗████████╗██╗   ██╗    ███████╗ ██████╗     │      ║
+║     │ ████╗  ██║██║██╔════╝╚══██╔══╝╚██╗ ██╔╝    ██╔════╝██╔═████╗    │      ║
+║     │ ██╔██╗ ██║██║█████╗     ██║    ╚████╔╝     ███████╗██║██╔██║    │      ║
+║     │ ██║╚██╗██║██║██╔══╝     ██║     ╚██╔╝      ╚════██║████╔╝██║    │      ║
+║     │ ██║ ╚████║██║██║        ██║      ██║       ███████║╚██████╔╝    │      ║
+║     │ ╚═╝  ╚═══╝╚═╝╚═╝        ╚═╝      ╚═╝       ╚══════╝ ╚═════╝     │      ║
 ║     │                                                                 │      ║
 ║     │          A I   P O R T F O L I O   O P T I M I Z A T I O N      │      ║
 ║     └─────────────────────────────────────────────────────────────────┘      ║
@@ -47,21 +47,37 @@
 
 <div align="center">
 
-| 🎯 **Core** | 🧠 **Intelligence** | 🏗️ **Infrastructure** |
-|:---:|:---:|:---:|
-| [Overview](#-overview) | [AI/ML Pipeline](#-quantitative-ml-pipeline--optimization) | [Technology Stack](#-technology-stack) |
-| [Key Features](#-key-features) | [Explainable AI](#-explainable-ai-xai) | [Repo Structure](#-repository-structure) |
-| [Visual Artifacts](#-visual-artifacts--model-explainability) | [Architecture](#-architecture-overview) | [Setup](#-installation-and-setup) |
-| [API Docs](#-api-documentation) | [Database](#-database-and-data-management) | [Deployment](#-deployment--containerization) |
+<sub>
 
-| 🔐 **Ops** | 📚 **Reference** |
-|:---:|:---:|
-| [Security](#-security-and-hardening-considerations) | [FAQ](#-troubleshooting--faq) |
-| [Testing](#-testing-and-code-quality) | [Known Limitations](#-known-limitations) |
-| [Roadmap](#-roadmap) | [Contributing](#-contributing) |
+**🎯 CORE** &nbsp;·&nbsp;
+[Overview](#-overview) ·
+[Features](#-key-features) ·
+[Artifacts](#-visual-artifacts--model-explainability) ·
+[API](#-api-documentation)
+
+**🧠 INTELLIGENCE** &nbsp;·&nbsp;
+[AI/ML](#-quantitative-ml-pipeline--optimization) ·
+[XAI](#-explainable-ai-xai) ·
+[Architecture](#-architecture-overview) ·
+[Database](#-database-and-data-management)
+
+**🏗️ INFRASTRUCTURE** &nbsp;·&nbsp;
+[Stack](#-technology-stack) ·
+[Structure](#-repository-structure) ·
+[Setup](#-installation-and-setup) ·
+[Deploy](#-deployment--containerization)
+
+**🔐 OPS &nbsp;·&nbsp; REFERENCE** &nbsp;·&nbsp;
+[Security](#-security-and-hardening-considerations) ·
+[Testing](#-testing-and-code-quality) ·
+[Roadmap](#-roadmap) ·
+[FAQ](#-troubleshooting--faq) ·
+[Limitations](#-known-limitations) ·
+[Contributing](#-contributing)
+
+</sub>
 
 </div>
-
 ---
 
 ## 🎯 Overview
@@ -337,35 +353,30 @@ Displayed natively in the dashboard
 
 ```mermaid
 flowchart TD
-    subgraph Data_Pipeline["1️⃣  INGESTION & PREPROCESSING"]
-        A[Nifty 50 Historical Data<br/>yfinance / NSE API] --> B[preprocess.py<br/>Forward-fill · Returns · Cleaning]
-        B --> C[feature_engineering.py<br/>Momentum · Volatility · RSI · MACD · Volume]
+    subgraph Data_Pipeline["1. Ingestion & Preprocessing"]
+        A[Nifty 50 Historical Data\nyfinance / NSE API] --> B[preprocess.py\nForward-fill, Returns, Cleaning]
+        B --> C[feature_engineering.py\nMomentum, Volatility, RSI, MACD, Volume]
     end
 
-    subgraph Quantitative_Engines["2️⃣  QUANTITATIVE INFERENCE ENGINES"]
-        C --> D["📈 Return Predictor<br/>LightGBM / RF Regressor"]
-        C --> E["🌊 Volatility Engine<br/>GARCH(1,1) + Ledoit-Wolf"]
-        C --> F["🔮 Regime Detector<br/>3-State Gaussian HMM"]
-        D --> G["🔍 SHAP XAI Engine<br/>TreeExplainer"]
+    subgraph Quantitative_Engines["2. Quantitative Inference Engines"]
+        C --> D["Return Predictor\nLightGBM / RF Regressor"]
+        C --> E["Volatility Engine\nGARCH(1,1) + Ledoit-Wolf Covariance"]
+        C --> F["Regime Detector\n3-State Gaussian HMM"]
+        D --> G["SHAP XAI Engine\nTreeExplainer Justifications"]
     end
 
-    subgraph Optimization_Layer["3️⃣  FUSION & OPTIMIZATION"]
-        D & E & F --> H["fusion.py<br/>Dynamic Contextual Bandit Penalty"]
-        H --> I["🎯 CVXPY Optimizer<br/>Markowitz QP<br/>Long-Only · Max 20% Cap"]
-        I --> J[("💾 Processed Artifacts<br/>data/processed/*.csv")]
+    subgraph Optimization_Layer["3. Fusion & Optimization"]
+        D & E & F --> H["fusion.py\nDynamic Contextual Bandit Penalty"]
+        H --> I["CVXPY Optimizer\nMarkowitz Quadratic Program\nLong-Only, Max 20% Cap"]
+        I --> J[("Processed Artifacts\ndata/processed/*.csv")]
     end
 
-    subgraph Application_Layer["4️⃣  API & PRESENTATION"]
-        J --> K["⚡ FastAPI Backend<br/>src/api/main.py :8000"]
-        L[("🗄️ Database<br/>SQLite / PostgreSQL")] <--> K
-        K <--> M["🌐 Next.js Dashboard<br/>frontend/ :3000"]
-        K <--> N["📓 Streamlit Dashboard<br/>src/dashboard/ :8501"]
+    subgraph Application_Layer["4. API & Presentation"]
+        J --> K["FastAPI Backend\nsrc/api/main.py :8000"]
+        L[("Database\nSQLite / PostgreSQL")] <--> K
+        K <--> M["Next.js Web Dashboard\nfrontend/ :3000"]
+        K <--> N["Streamlit Dashboard\nsrc/dashboard/ :8501"]
     end
-
-    style Data_Pipeline fill:#1a1a2e,stroke:#00d9ff,stroke-width:2px,color:#fff
-    style Quantitative_Engines fill:#16213e,stroke:#ff6b35,stroke-width:2px,color:#fff
-    style Optimization_Layer fill:#0f3460,stroke:#8a2be2,stroke-width:2px,color:#fff
-    style Application_Layer fill:#1a1a2e,stroke:#00c853,stroke-width:2px,color:#fff
 ```
 
 📖 **Deep-dive:** [System Architecture & Interview Guide](docs/SYSTEM_ARCHITECTURE_AND_INTERVIEW_GUIDE.md) — HLD, LLD, sequence diagrams & mathematical formulation

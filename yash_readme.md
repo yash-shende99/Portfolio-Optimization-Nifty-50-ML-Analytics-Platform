@@ -89,9 +89,8 @@
     <td align="left"><a href="#-contributing">Contributing</a></td>
   </tr>
 </table>
+
 ## 🎯 Overview
-
-
 
 ```diff
 - ❌ Traditional robo-advisors: static 60/40 splits, naive extrapolation

@@ -393,7 +393,7 @@ flowchart TD
     end
 ```
 
-📖 **Deep-dive:** [System Architecture & Interview Guide](docs/SYSTEM_ARCHITECTURE_AND_INTERVIEW_GUIDE.md) — HLD, LLD, sequence diagrams & mathematical formulation
+📖 **Deep-dive:** [System Architecture Guide](docs/SYSTEM_ARCHITECTURE.md) — HLD, LLD, sequence diagrams & mathematical formulation
 
 </div>
 
@@ -457,7 +457,7 @@ portfolio-ml/
 │   └── Dockerfile.dashboard
 │
 ├── 📂 docs/
-│   └── SYSTEM_ARCHITECTURE_AND_INTERVIEW_GUIDE.md
+│   └── SYSTEM_ARCHITECTURE.md
 │
 ├── 📂 frontend/                       # ⚛️  Next.js 16 Web App
 │   ├── package.json
@@ -505,9 +505,6 @@ portfolio-ml/
 ├── 🔧 comparative_analysis.py
 ├── 🖼️ feature_importance_*.png
 ├── 📘 INTERVIEW_QA_REFERENCE.md       # 330 institutional questions
-├── 📘 PROJECT_ANALYSIS_AND_COMPLETE_399_QA.md
-├── 📘 project_evaluation.md
-├── 📘 project_explanation.md
 ├── 📄 requirements.txt
 ├── ⚙️ run_full_pipeline.bat            # 7-stage ML pipeline
 └── ⚙️ run_remaining.bat                # Stages 2–7 (skip download)
@@ -1115,11 +1112,8 @@ cd frontend && npm run lint
 | 📚 Document | 🔗 Link |
 |:---|:---|
 | 🌐 **Repository** | [github.com/yash-shende99/portfolio-ml](https://github.com/yash-shende99/portfolio-ml) |
-| 🏗️ **System Architecture & Interview Guide** | [`docs/SYSTEM_ARCHITECTURE_AND_INTERVIEW_GUIDE.md`](docs/SYSTEM_ARCHITECTURE_AND_INTERVIEW_GUIDE.md) |
+| 🏗️ **System Architecture Guide** | [`docs/SYSTEM_ARCHITECTURE.md`](docs/SYSTEM_ARCHITECTURE.md) |
 | 🎯 **Institutional Q&A (330 questions)** | [`INTERVIEW_QA_REFERENCE.md`](INTERVIEW_QA_REFERENCE.md) |
-| 🧠 **Master Technical Q&A (399 questions)** | [`PROJECT_ANALYSIS_AND_COMPLETE_399_QA.md`](PROJECT_ANALYSIS_AND_COMPLETE_399_QA.md) |
-| 📊 **Model Evaluation & Benchmarks** | [`project_evaluation.md`](project_evaluation.md) |
-| 📖 **Executive Overview** | [`project_explanation.md`](project_explanation.md) |
 
 </div>
 

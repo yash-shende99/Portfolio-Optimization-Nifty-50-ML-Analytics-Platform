@@ -5,7 +5,7 @@
 > **System Name:** AI Personal Wealth Manager (NexGen Wealth)  
 > **Target Asset Universe:** National Stock Exchange of India (NSE) NIFTY 50 Constituents + `^NSEI` Benchmark  
 > **Repository Root:** `c:\Users\Yash\99\99PRO\portfolio-ml`  
-> **Target Path:** `docs/SYSTEM_ARCHITECTURE_AND_INTERVIEW_GUIDE.md`  
+> **Target Path:** `docs/SYSTEM_ARCHITECTURE.md`  
 > **Status:** Reverse-Engineered from Active Codebase  
 
 ---
@@ -1135,5 +1135,5 @@ Use this progressive 6-stage checklist to master the architecture before technic
 
 ---
 > 🎯 **Document Author:** Senior Software Architect & Quantitative System Design Reviewer  
-> 📌 **Reference Path:** `docs/SYSTEM_ARCHITECTURE_AND_INTERVIEW_GUIDE.md`  
+> 📌 **Reference Path:** `docs/SYSTEM_ARCHITECTURE.md`  
 > 🏷️ **Verification Status:** 100% Reverse-Engineered from Active Repository Implementation

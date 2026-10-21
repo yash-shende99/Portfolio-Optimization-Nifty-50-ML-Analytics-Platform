@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { TrendingUp, ShieldCheck } from "lucide-react";
+import { API_BASE_URL } from "@/lib/api";
 
 const MARKET_STATS = [
     { label: "NIFTY 50", value: "22,456.80", change: "+1.24%", positive: true },
@@ -21,7 +22,7 @@ export default function FundsPage() {
     const [hoveredRow, setHoveredRow] = useState<number | null>(null);
 
     useEffect(() => {
-        fetch("http://localhost:8000/funds")
+        fetch(`${API_BASE_URL}/funds`)
             .then(res => res.json())
             .then(data => {
                 setFunds(data);

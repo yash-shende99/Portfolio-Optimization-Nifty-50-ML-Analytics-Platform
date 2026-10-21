@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { PieChart, AlertCircle, ScanLine, ShieldAlert, Zap, Layers, Activity, TrendingUp, HeartPulse } from "lucide-react";
+import { API_BASE_URL } from "@/lib/api";
 
 interface NetworkNode {
     x: number;
@@ -84,7 +85,7 @@ export default function PortfolioPage() {
                 }
             });
 
-            const res = await fetch("http://localhost:8000/portfolio_analysis", {
+            const res = await fetch(`${API_BASE_URL}/portfolio_analysis`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ holdings: formattedHoldings })

@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { API_BASE_URL } from "@/lib/api";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -124,7 +125,7 @@ export default function LoginPage() {
             formData.append("username", username.trim());
             formData.append("password", password.trim());
 
-            const res = await fetch("http://localhost:8000/auth/token", {
+            const res = await fetch(`${API_BASE_URL}/auth/token`, {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: formData,
@@ -148,7 +149,7 @@ export default function LoginPage() {
         setError("");
 
         try {
-            const regRes = await fetch("http://localhost:8000/auth/register", {
+            const regRes = await fetch(`${API_BASE_URL}/auth/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username: username.trim(), password: password.trim() }),
@@ -159,7 +160,7 @@ export default function LoginPage() {
             const token = regData.access_token;
             localStorage.setItem("token", token);
 
-            const profRes = await fetch("http://localhost:8000/auth/profile", {
+            const profRes = await fetch(`${API_BASE_URL}/auth/profile`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

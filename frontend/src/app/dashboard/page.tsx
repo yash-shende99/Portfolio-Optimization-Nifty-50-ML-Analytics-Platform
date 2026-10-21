@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { Activity, Layers, ShieldAlert, TrendingUp, AlertCircle, ScanLine } from "lucide-react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Sector } from "recharts";
+import { API_BASE_URL } from "@/lib/api";
 
 const COLORS = ['#00D4FF', '#F0B942', '#00FF88', '#7B61FF', '#FF6B9D', '#00E5CC', '#FF8C00', '#4ADE80', '#818CF8', '#FF4560'];
 
@@ -58,21 +59,21 @@ export default function DashboardPage() {
             if (!token) return;
 
             try {
-                const profRes = await fetch("http://localhost:8000/auth/profile", { headers: { Authorization: `Bearer ${token}` } });
+                const profRes = await fetch(`${API_BASE_URL}/auth/profile`, { headers: { Authorization: `Bearer ${token}` } });
                 let profData = null;
                 if (profRes.ok) {
                     profData = await profRes.json();
                     setProfile(profData);
                 }
 
-                const regimeRes = await fetch("http://localhost:8000/regime");
+                const regimeRes = await fetch(`${API_BASE_URL}/regime`);
                 if (regimeRes.ok) {
                     setRegime(await regimeRes.json());
                 }
 
                 // Fetch Portfolio Allocations
                 const riskLevel = profData?.risk_tolerance ? profData.risk_tolerance / 10 : 0.5;
-                const portRes = await fetch("http://localhost:8000/portfolio", {
+                const portRes = await fetch(`${API_BASE_URL}/portfolio`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ risk_tolerance: riskLevel })
@@ -91,7 +92,7 @@ export default function DashboardPage() {
                 }
 
                 // Fetch XAI Explanations
-                const expRes = await fetch("http://localhost:8000/explain");
+                const expRes = await fetch(`${API_BASE_URL}/explain`);
                 if (expRes.ok) {
                     const expData = await expRes.json();
                     // Filter explanations to only show stocks the user actually holds
@@ -104,7 +105,7 @@ export default function DashboardPage() {
                 }
 
                 // Fetch News Sentiment
-                const sentRes = await fetch("http://localhost:8000/sentiment");
+                const sentRes = await fetch(`${API_BASE_URL}/sentiment`);
                 if (sentRes.ok) {
                     const sentData = await sentRes.json();
                     if (sentData.length > 0) {

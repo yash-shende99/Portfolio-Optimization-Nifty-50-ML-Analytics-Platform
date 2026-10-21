@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { LayoutDashboard, PieChart, TrendingUp, Target, LogOut, Loader2 } from "lucide-react";
+import { API_BASE_URL } from "@/lib/api";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
@@ -27,7 +28,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 goals: profile?.goals || []
             };
 
-            const res = await fetch("http://localhost:8000/auth/profile", {
+            const res = await fetch(`${API_BASE_URL}/auth/profile`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -57,7 +58,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             }
 
             try {
-                const res = await fetch("http://localhost:8000/auth/profile", {
+                const res = await fetch(`${API_BASE_URL}/auth/profile`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (!res.ok) throw new Error("Unauthorized");

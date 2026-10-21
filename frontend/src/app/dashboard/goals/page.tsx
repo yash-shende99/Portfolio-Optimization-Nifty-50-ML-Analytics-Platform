@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid } from "recharts";
 import { Target, Calculator } from "lucide-react";
+import { API_BASE_URL } from "@/lib/api";
 
 interface Particle {
     x: number;
@@ -43,7 +44,7 @@ export default function GoalsPage() {
         setLoading(true);
 
         try {
-            const res = await fetch("http://localhost:8000/goals", {
+            const res = await fetch(`${API_BASE_URL}/goals`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

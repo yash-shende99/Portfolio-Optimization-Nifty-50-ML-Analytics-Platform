@@ -1,1 +1,24 @@
-conda activate portfolio_env
+# ============================================================
+# RUNNING THE PROJECT (CURRENT ACTIVE SETUP)
+# ============================================================
+
+# Quick 1-click launcher (starts Backend on 8001 & Frontend on 3001):
+.\start_all.bat
+
+# --- OR RUN IN SEPARATE TERMINALS ---
+
+# Terminal 1: Backend API (FastAPI + Uvicorn on Port 8001)
+.\venv\Scripts\Activate.ps1
+uvicorn src.api.main:app --host 0.0.0.0 --port 8001 --reload
+
+# Terminal 2: Frontend (Next.js on Port 3001)
+cd frontend
+npm run dev -- -p 3001
+
+# Terminal 3: (Optional) Streamlit Dashboard on Port 8501
+.\venv\Scripts\Activate.ps1
+streamlit run src\dashboard\main.py --server.port 8501
+
+# Terminal 4: (Optional) Re-run full ML Quantitative Pipeline
+.\venv\Scripts\Activate.ps1
+.\run_full_pipeline.bat
